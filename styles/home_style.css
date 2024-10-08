@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,300&display=swap');
 
-:root
-{
+:root {
     --green: green;
     --black: #130f40;
     --light-color: #666;
-    --box-shadow: 0 .5rem 1rem rgba(0,0,0.1);
-    --border: 2rem solid rgba(0,0,0.1);
-    --outline: .1rem solid rgba(0,0,0.1);
+    --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    --border: 20px solid rgba(0, 0, 0, 0.1);
+    --outline: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 
 *
 {
@@ -20,15 +20,13 @@
     border: none;
     text-decoration: none;
     text-transform: capitalize;
-    transition: all .2s linear;
 }
 
 html
 {
-    font-size: 62.5%;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    scroll-padding-top: 7rem;
+    scroll-padding-top: 70px;
 }
 
 body
@@ -38,6 +36,7 @@ body
 
 .header
 {
+    font-size: 10px;
     border: 0px solid;
     position: fixed;
     top: 0;
@@ -46,14 +45,14 @@ body
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 2rem 6%;
+    padding: 20px 6%;
     background: #fff;
     box-shadow: var(--box-shadow);
 }
 
 .header .logo
 {
-    font-size: 2.5rem;
+    font-size: 25px;
     font-weight: bold;
     color: green;
 }
@@ -66,8 +65,8 @@ body
 .header .navbar a
 {
     position:relative;
-    font-size: 1.7rem;
-    margin: 0 1rem;
+    font-size: 17px;
+    margin: 0 10px;
     color: var(--black);
 }
 
@@ -79,14 +78,14 @@ body
 .header .icons div{
 
     border: 1px solid;
-    height: 4.5rem;
-    width: 4.5rem;
-    line-height: 4.5rem;
-    border-radius: .5rem;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    border-radius: 5px;
     background: #eee;
     color: var(--black);
-    font-size: 2rem;
-    margin-right: .3rem;
+    font-size: 20px;
+    margin-right: 3px;
     text-align: center;
     cursor: pointer;
 }
