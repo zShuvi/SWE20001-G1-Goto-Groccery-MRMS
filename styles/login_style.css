@@ -115,3 +115,9 @@ body {
 .register-link p a:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-wdith: 500px) {
+    .form .column {
+        flex-wrap: wrap;
+    }
+}
