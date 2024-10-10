@@ -89,15 +89,16 @@ body {
 .design .btn {
     width: 100%;
     height: 45px;
-    background: #fff;
+    background: black;
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
     font-size: 16px;
-    color: #333;
+    color: grey;
     font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 .design .register-link {
@@ -130,6 +131,10 @@ body {
 
 .login-link p a:hover {
     text-decoration: underline;
+}
+
+.design .btn:hover {
+    background-color: white;
 }
 
 @media screen and (max-wdith: 500px) {
