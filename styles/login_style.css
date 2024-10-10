@@ -13,7 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../images/Background.jpeg') no-repeat;
+    background: url('../images/Login_Background.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -21,7 +21,7 @@ body {
 .design {
     width: 420px;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: 2px solid black;
     backdrop-filter: blur(80px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
@@ -116,8 +116,26 @@ body {
     text-decoration: underline;
 }
 
+.design .login-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.login-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link p a:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-wdith: 500px) {
     .form .column {
         flex-wrap: wrap;
     }
 }
+
+
