@@ -5,10 +5,9 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-
 }
 
-body {
+body{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +18,7 @@ body {
 }
 
 .design {
-    width: 420px;
+    width: 750px;
     background: transparent;
     border: 2px solid black;
     backdrop-filter: blur(80px);
@@ -27,6 +26,8 @@ body {
     color: #fff;
     border-radius: 20px;
     padding: 30px 40px; 
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .design h1 {
@@ -34,106 +35,82 @@ body {
     text-align: center;
 }
 
-.design .input-box {
+.design .form {
+    margin-top: 30px;
+}
+
+.form .input-box {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-box label {
+    color: white;
+}
+
+.form .input-box input {
     position: relative;
-    width: 100%;
     height: 50px;
-    margin: 30px 0; 
-}
-
-.input-box input {
     width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
     outline: none;
-    border: 2px solid rgba(255, 255, 255, .2);
-    border-radius: 40px;
-    color: #fff;
-    padding: 20px 45px 20px 20px;
+    font-size: 1rem;
+    color: #707070;
+    margin-top: 8px;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 0 15px;
 }
 
-.input-box input::placeholder {
-    color: #fff;
-}
-
-.input-box i {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 15px;
-}
-
-.design .remember-forgot {
+.form .column {
     display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: -15px 0 15px;
+    column-gap: 15px;
 }
 
-.remember-forgot label input {
-    accent-color: #fff;
-    margin-right: 3px;
+.form .gender-box {
+    margin-top: 20px;
 }
 
-.remember-forgot a {
-    color: #fff;
-    text-decoration: none;
+.gender-box h3{
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2px;
 }
 
-.remember-forgot a:hover {
-    text-decoration: underline;
+.form :where(.gender-option, .gender) {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+    flex-wrap: wrap;
 }
 
-.design .btn {
-    width: 100%;
-    height: 45px;
-    background: black;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+.form .gender {
+    column-gap: 5px;
+}
+
+.gender input {
+    accent-color: red;
+}
+
+.form :where(.gender input, .gender label) {
     cursor: pointer;
-    font-size: 16px;
+}
+
+.form button {
+    height: 55px;
+    width: 100%;
     color: grey;
+    font-size: 1rem;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    border-radius: 6px;
     font-weight: 600;
     transition: all 0.3s ease;
+    background-color: black;
 }
 
-.design .register-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.register-link p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link p a:hover {
-    text-decoration: underline;
-}
-
-.design .login-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.login-link p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.login-link p a:hover {
-    text-decoration: underline;
-}
-
-.design .btn:hover {
+.form button:hover {
     background-color: white;
 }
 
@@ -142,6 +119,12 @@ body {
         flex-wrap: wrap;
     }
 }
+
+.form :where(.gender-option, .gender) {
+    row-gap: 15px;
+}
+
+
 
 
 
