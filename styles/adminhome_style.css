@@ -88,9 +88,12 @@ body.dark
     width: 88px;
 }
 
+
 .sidebar.close .text
 {
     opacity: 0;
+    pointer-events: none; /* Disable pointer events */
+    cursor: default; /* Change cursor to default */
 }
 
 .sidebar li
@@ -359,7 +362,6 @@ body.dark .switch::before
 }
 
 
-
 /* Admin Home Container Box */
 .container {
     display: grid;
@@ -379,7 +381,7 @@ body.dark .switch::before
 }
 
 .box img {
-    width: 100%;
+    width: 50%;
     height: auto;
     border-radius: 8px;
 }
@@ -404,4 +406,9 @@ button:hover {
 body.dark button:hover
 {
     color: var(--text-color);
+}
+
+
+.container .text{
+    font-size: 20px;
 }
