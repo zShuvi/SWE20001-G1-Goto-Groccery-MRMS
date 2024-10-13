@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,300&display=swap');
+
+:root {
+    --green: green;
+    --black: #130f40;
+    --light-color: #666;
+    --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    --border: 20px solid rgba(0, 0, 0, 0.1);
+    --outline: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+*
+{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+html
+{
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px;
+}
+
+body
+{
+    background: #eee;
+}
+
+.header
+{
+    font-size: 10px;
+    border: 0px solid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 6%;
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    z-index: 1;
+}
+
+.header .logo
+{
+    font-size: 25px;
+    font-weight: bold;
+    color: green;
+    text-decoration: none;
+}
+
+.header .logo i
+{
+    color: #009874;
+}
+
+.header .navbar a
+{
+    position:relative;
+    text-decoration: none;
+    font-size: 17px;
+    margin: 0 10px;
+    color: var(--black);
+}
+
+.header .navbar hover
+{
+    color: var(--green);
+}
+
+.header .icons div{
+
+    border: 1px solid;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    border-radius: 5px;
+    background: #eee;
+    color: var(--black);
+    font-size: 20px;
+    margin-right: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.header .icons div:hover
+{
+    background: #4ea27a;
+    color: white;
+}
+
+
+.header .navbar a:after
+{
+    content: "";
+    position: absolute;
+    background-color: #14837a;
+    height: 3px;
+    width: 0%;
+    left: 0;
+    bottom: -15%;
+    transition: 0.5s;
+}
+
+.header .navbar a:hover
+{
+    color: #009874;
+}
+
+.header .navbar a:hover:after
+{
+    width: 100%;
+}
+
+
+
+/* Testing */
+.home{
+    margin-top: 120px;
+    margin-bottom: 100px;
+}
+
+
+.ui-w-80 {
+    width : 80px !important;
+    height: auto;
+}
+
+button{
+    margin: 50px 10px;
+    cursor: pointer;
+}
+
+.text-right .btn{
+    background-color: var(--body-color);
+    color: var(--text-color);
+    transition: var(--trans-05);
+}
+
+.text-right .btn:hover{
+    background-color: var(--primary-color);
+    color: var(--primary-color-light);
+}
+
+body.dark .text-right .btn:hover{
+    color: inherit;
+}
+
+.form-control, .custom-select{
+    background-color: var(--sidebar-color);
+    border-color: var(--text-color);
+    color: var(--text-color);
+    transition: var(--trans-05);
+}
+
+
+.card {
+    background-clip: padding-box;
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+    border-radius: 20px;
+    border-width: 8px;
+    border-color: var(--sidebar-color);
+    box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
+    transition: var(--trans-05);
+}
+
+
+
+.row-bordered {
+    overflow: hidden;
+}   
+
+.account-settings-fileinput {
+    position  : absolute;
+    visibility: hidden;
+    width     : 1px;
+    height    : 1px;
+    opacity   : 0;
+}
+
+.account-settings-links .list-group-item.active {
+    font-weight: bold !important;
+}
+
+html:not(.dark-style) .account-settings-links .list-group-item.active {
+    background: var(--body-color);
+}
+
+html:not(.dark-style) .account-settings-links .list-group-item {
+    background: var(--sidebar-color);
+    color: var(--text-color);
+    transition: var(--trans-05);
+}
+
+
+.light-style .account-settings-links .list-group-item.active {
+    color: var(--text-color) !important;
+}
+
+.light-style .account-settings-links .list-group-item {
+    padding     : 0.85rem 1.5rem;
+    border-color: rgba(24, 28, 33, 0.03) !important;
+}
+
+
+/* Footer */
+footer {
+    padding: 50px 20px;
+    background-color: #333;
+    color: white;
+}
+
+footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 40px;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style-type: none;
+}
+
+.footer-column ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-subscribe input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 250px;
+    border-radius: 4px;
+    border: none;
+}
+
+.footer-subscribe button {
+    padding: 10px 20px;
+    background-color: #27ae60;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .categories, .product-grid, .blogs, .review-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+
+/* User Button Dropdown */
+#user-btn {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px; /* Smaller width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px; /* Rounded corners for a clean look */
+  }
+  
+  .dropdown-content li {
+    padding: 2px 10px; /* Smaller padding */
+    text-align: left;
+  }
+  
+  .dropdown-content li a {
+    color: black;
+    text-decoration: none;
+    font-size: 14px; /* Smaller font size */
+    display: block;
+  }
+  
+  .dropdown-content li:hover {
+    background-color: #27ae60;
+    border-radius: 5px;
+  }
+  
+  /* Show the dropdown content when hovering over the user icon */
+  #user-btn:hover .dropdown-content {
+    display: block;
+  }
+
+
+  /* Styling for the ribbon effect */
+.ribbon-header {
+    position: relative;
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    z-index: 0;
+}
+
+/* Ribbon effect - the "tails" of the ribbon */
+.ribbon-header::before,
+.ribbon-header::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: #2980b9;
+    z-index: -1;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* Left tail of the ribbon */
+.ribbon-header::before {
+    left: -20px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+/* Right tail of the ribbon */
+.ribbon-header::after {
+    right: -20px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Optional: Adding shadow for better contrast */
+.ribbon-header {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
