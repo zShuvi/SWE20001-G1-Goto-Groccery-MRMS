@@ -1,5 +1,13 @@
 <?php
-    session_start();
+// Start session and check if the user is logged in
+session_start();
+
+    if (($_SESSION['logged_in']) == false) {
+        header("Location: Home.php");
+        exit;
+    }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +42,7 @@
             }
         }
     ?>
+
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
@@ -50,7 +59,11 @@
         <div class="fa fa-shopping-cart" id="cart-btn"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">
-                <!-- Content will be populated by JavaScript -->
+                <li><a href="UserProfile.php">View Profile</a></li>
+                <li><a href="Member.php">Member</a></li>
+                <li><a href="Login.php?logout=true">Logout</a></li>
+            </ul>
+        </div>
             </ul>
         </div>
     </div>
@@ -209,7 +222,6 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>
-    <script src="scripts/home.js"></script>
 </body>
 
 
