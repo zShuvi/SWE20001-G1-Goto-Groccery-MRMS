@@ -33,8 +33,13 @@ setInterval(() => {
 
 
 function isUserLoggedIn() {
-    // Replace with actual login check
-    return Math.random() > 0; // For demo, random login state
+    var loggedin = document.getElementById('sessionLoggedIn').value;
+    if (loggedin == 1)
+    {
+        return true;
+    }
+    return false;
+    //return Math.random() > 0; // For demo, random login state
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -42,15 +47,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (isUserLoggedIn()) {
         dropdownList.innerHTML = `
-            <li><a href="UserProfile.html">View Profile</a></li>
-            <li><a href="Login.html" onclick="logoutUser()">Logout</a></li>
+            <li><a href="UserProfile.php">View Profile</a></li>
+            <li><a href="Login.php" onclick="logoutUser()">Logout</a></li>
         `;
     } else {
-        dropdownList.innerHTML = `<li><a href="Login.html">Login</a></li>`;
+        dropdownList.innerHTML = `<li><a href="Login.php">Login</a></li>`;
     }
 });
 
 function logoutUser() {
-    alert('Logging out...');
-    // Handle logout logic
+    document.getElementById('sessionLoggedIn').value = "0";
+    //alert('Logging out...');
+    // Handle logout logic  
 }
