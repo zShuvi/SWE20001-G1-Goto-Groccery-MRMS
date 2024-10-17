@@ -39,7 +39,7 @@ function isUserLoggedIn() {
         return true;
     }
     return false;
-    //return Math.random() > 0; // For demo, random login state
+   
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -48,10 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (isUserLoggedIn()) {
         dropdownList.innerHTML = `
             <li><a href="UserProfile.php">View Profile</a></li>
-            <li><a href="Login.php" onclick="logoutUser()">Logout</a></li>
+            <li><a href="Member.php">Member</a></li>
+            <li><a href="Login.php?logout=true" onclick="logoutUser()">Logout</a></li>
         `;
     } else {
-        dropdownList.innerHTML = `<li><a href="Login.php">Login</a></li>`;
+        dropdownList.innerHTML = `
+            <li><a href="Login.php">Login</a></li>
+            <li><a href="SignUp.php">Sign Up</a></li>
+        `;
     }
 });
 
