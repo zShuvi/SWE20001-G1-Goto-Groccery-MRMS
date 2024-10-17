@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
@@ -15,11 +19,26 @@
 
 
 <body>
+    <?php
+        //$_SESSION['active_user'] = 1;   //dummy session id. active_user tracks using user's ID. 
+        $userid = $_SESSION['active_user'];
+        include 'Database.php';
+        $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $username = $row["Username"];
+                $email = $row["Email"];
+            }
+        }
+    ?>
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
     <nav class="navbar">
-        <a href="Home.html">home</a>
+        <a href="Home.php">home</a>
         <a href="#features">features</a>
         <a href="#products">products</a>
         <a href="#categories">categories</a>
@@ -79,7 +98,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" value="username">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $username ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Name</label>
@@ -87,7 +106,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="name@gmail.com">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $email ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Company</label>
