@@ -1,3 +1,15 @@
+<?php
+// Start session and check if the user is logged in
+session_start();
+
+    if (($_SESSION['logged_in']) == false) {
+        header("Location: AdminLogin.php");
+        exit;
+    }
+
+    
+?>
+
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
@@ -28,8 +40,8 @@
 
 
                 <div class="text header-text">
-                    <span class="name">Temp: Name</span>
-                    <span class="profession">Temp: Roles</span>
+                    <span class="name"><?php echo $_SESSION['active_username']; ?></span>
+                    <span class="profession"><?php echo $_SESSION['active_role']; ?></span>
                 </div>
 
             </div>
@@ -50,14 +62,14 @@
                 <ul class="menu-links">
 
                     <li class="">
-                        <a href="AdminHome.html">
+                        <a href="AdminHome.php">
                             <i class="bx bx-home-alt icon"></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="">
-                        <a href="AdminProduct.html">
+                        <a href="AdminProduct.php">
                             <i class="bx bx-box icon"></i>
                             <span class="text nav-text">Products</span>
                         </a>
@@ -66,14 +78,14 @@
                     
 
                     <li class="">
-                        <a href="AdminReport.html">
+                        <a href="AdminReport.php">
                             <i class="bx bxs-report icon"></i>
                             <span class="text nav-text">Reports</span>
                         </a>
                     </li>
 
                     <li class="">
-                        <a href="AdminStockOrder.html">
+                        <a href="AdminStockOrder.php">
                             <i class="bx bx-cart-add icon"></i>
                             <span class="text nav-text">Stock Ordering</span>
                         </a>
@@ -89,7 +101,7 @@
 
                    
                     <li class="">
-                        <a href="AdminProfile.html">
+                        <a href="AdminProfile.php">
                             <i class="bx bxs-user-detail icon"></i>
                             <span class="text nav-text">Profile</span>
                         </a>
@@ -100,7 +112,7 @@
             <div class="bottom-content">
 
                 <li class="log">
-                    <a href="AdminLogin.html">
+                    <a href="AdminLogin.php?logout=true">
                         <i class="bx bx-log-out icon"></i>
                         <span class="text nav-text">Logout</span>
                     </a>
