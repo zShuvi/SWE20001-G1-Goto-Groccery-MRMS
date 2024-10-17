@@ -1,6 +1,14 @@
 <?php
     session_start();
+
+    // Needed this, cause if the variable is unset, it sometimes pop up long error message
+    // Which causes the entire html display to shift sometimes.
+    if (!isset($_SESSION['logged_in'])){
+        $_SESSION['logged_in'] = 0;
+    }
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
@@ -17,7 +25,9 @@
 
 
 <body>
-    <input type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
+    
+    <input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
+    
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
