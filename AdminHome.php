@@ -1,5 +1,13 @@
 <?php
-    session_start();
+// Start session and check if the user is logged in
+session_start();
+
+    if (($_SESSION['logged_in']) == false) {
+        header("Location: AdminLogin.php");
+        exit;
+    }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +39,8 @@
 
 
                 <div class="text header-text">
-                    <span class="name">Temp: Name</span>
-                    <span class="profession">Temp: Roles</span>
+                    <span class="name"><?php echo $_SESSION['active_username']; ?></span>
+                    <span class="profession"><?php echo $_SESSION['active_role']; ?></span>
                 </div>
 
             </div>
@@ -103,7 +111,7 @@
             <div class="bottom-content">
 
                 <li class="">
-                    <a href="AdminLogin.php">
+                    <a href="AdminLogin.php?logout=true">
                         <i class="bx bx-log-out icon"></i>
                         <span class="text nav-text">Logout</span>
                     </a>
