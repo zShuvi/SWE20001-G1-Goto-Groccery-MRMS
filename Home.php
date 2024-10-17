@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
@@ -14,6 +17,7 @@
 
 
 <body>
+    <input type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
@@ -34,6 +38,8 @@
             </ul>
         </div>
     </div>
+
+    <!-- <label><?php echo $_SESSION["active_username"]?></label> --> <!-- display name in navbar -->
 
     </header>
 
