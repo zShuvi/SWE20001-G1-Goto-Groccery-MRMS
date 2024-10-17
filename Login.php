@@ -4,6 +4,7 @@ session_start();
 
 include 'Database.php';
 
+
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the input from the form
@@ -22,7 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($usr_name == $row["Username"] && $pwd == $row["Password"])
                 {
                     $_SESSION['logged_in'] = true;
-                    header("Location: Main.html");
+                    $_SESSION['active_user'] = $row["ID"];
+                    $_SESSION['active_username'] = $row["Username"];
+                    header("Location: Home.php");
                     exit(); // Terminate the script here after redirect
                 }
                 else 
@@ -30,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     //Wrong password
                     $_SESSION['logged_in'] = false;
                     $_SESSION['error'] = "Invalid password. Please try again.";
+                    
                     header("Location: Login.php");
                     exit();
                     
@@ -45,6 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 }
+
+
+    /* Session cleanup: for logout redirecting to here */
+    // remove all session variables
+        session_unset();
+
+    // destroy the session
+        session_destroy();
 
 // Close the connection
 $conn->close();
@@ -100,7 +112,7 @@ $conn->close();
             <button type="submit" class="btn">Login</button>
 
             <div class="login-link">
-                <p> An Admin? <a href="AdminLogin.html">Login here</a></p>
+                <p> An Admin? <a href="AdminLogin.php">Login here</a></p>
             </div>
 
             <div class="register-link">
