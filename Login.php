@@ -4,6 +4,20 @@ session_start();
 
 include 'Database.php';
 
+if (isset($_GET["logout"])){
+
+    /* Session cleanup: for logout redirecting to here */
+    // remove all session variables
+    session_unset();
+    // destroy the session
+    session_destroy();
+    
+    // Redirect to Login.php without the logout parameter
+    header("Location: Login.php");
+    exit();
+
+};
+
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -50,13 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 }
 
-
-    /* Session cleanup: for logout redirecting to here */
-    // remove all session variables
-        session_unset();
-
-    // destroy the session
-        session_destroy();
 
 // Close the connection
 $conn->close();
