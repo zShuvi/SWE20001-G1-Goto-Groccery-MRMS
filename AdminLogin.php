@@ -3,6 +3,19 @@
 
     include 'Database.php';
 
+    if (isset($_GET["logout"])){
+
+        /* Session cleanup: for logout redirecting to here */
+        // remove all session variables
+        session_unset();
+        // destroy the session
+        session_destroy();
+
+        // Redirect to Login.php without the logout parameter
+        header("Location: AdminLogin.php");
+        exit();
+    
+    };
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     {
                         $_SESSION['logged_in'] = true;
                         $_SESSION['active_user'] = $row["ID"];
+                        $_SESSION['active_username'] = $row["Username"];
                         $_SESSION['active_role'] = $row["Role"];
                         header("Location: AdminHome.php");
                         exit(); // Terminate the script here after redirect
@@ -32,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     else 
                     {
                         $_SESSION['logged_in'] = false;
-                    $_SESSION['error'] = "Your account is not a staff account.";
-                    header("Location: AdminLogin.php");
-                    exit();
+                        $_SESSION['error'] = "Your account is not a staff account.";
+                        header("Location: AdminLogin.php");
+                        exit();
                     }
                 }
                 else 
@@ -58,12 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 }
 
-    /* Session cleanup: for logout redirecting to here */
-    // remove all session variables
-    session_unset();
-
-    // destroy the session
-    session_destroy();
 
 // Close the connection
 $conn->close();
@@ -107,7 +115,7 @@ $conn->close();
                 unset($_SESSION['error']);
             ?>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="btn" >Login</button>
         </form>
     </div>
 
