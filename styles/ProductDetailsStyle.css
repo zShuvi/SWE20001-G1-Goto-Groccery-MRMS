@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,300&display=swap');
+
+:root {
+    --green: green;
+    --black: #130f40;
+    --light-color: #666;
+    --box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    background-color: #f9f9f9;
+}
+
+.header {
+    font-size: 16px; /* Increased font size */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 6%;
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    z-index: 1;
+}
+
+.header .logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: green;
+}
+
+.header .navbar a {
+    position: relative;
+    font-size: 17px;
+    margin: 0 10px;
+    color: var(--black);
+}
+
+.header .navbar a:hover {
+    color: #009874;
+}
+
+.header .icons div {
+    border: 1px solid;
+    height: 45px;
+    width: 45px;
+    line-height: 45px;
+    border-radius: 5px;
+    background: #eee;
+    color: var(--black);
+    font-size: 20px;
+    margin-right: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.header .icons div:hover {
+    background: #4ea27a;
+    color: white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 120px auto; /* Adjusted top margin for spacing */
+    padding: 20px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.product {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    padding: 20px;
+    gap: 30px; /* gap between image and details */
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 20px;
+}
+
+.product img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; 
+    border-radius: 8px;
+}
+
+.product-details {
+    flex: 1; 
+}
+
+.product-details h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: var(--black);
+}
+
+.price {
+    color: #0000f1;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--light-color);
+}
+
+footer {
+    padding: 50px 20px;
+    background-color: #333;
+    font-size: 20px;
+    color: white;
+}
+
+footer .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 40px;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style-type: none;
+}
+
+.footer-column ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-subscribe input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 250px;
+    border-radius: 4px;
+    border: none;
+}
+
+.footer-subscribe button {
+    padding: 10px 20px;
+    background-color: #27ae60;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Random product style */
+.related-products-section {
+    margin-top: 30px; 
+    padding: 20px;
+}
+
+.related-products-title {
+    font-size: 24px; 
+    margin-bottom: 20px; 
+    font-weight: bold; 
+    text-align: center; 
+}
+
+.related-products-container {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap; /
+}
+
+.related-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Center elements */
+    height: 100%; /* Full height of the container */
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* Add smooth hover effect */
+}
+
+.related-product img {
+    width: 100%;
+    height: auto; 
+    max-height: 180px; 
+    object-fit: contain;
+    margin-bottom: 10px; 
+}
+
+.related-product h4 {
+    font-size: 16px;
+    text-align: center;
+    margin: 10px 0; 
+    flex-grow: 1;
+}
+
+.related-product p {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin: 0; 
+    text-align: center;
+    align-self: flex-end; 
+}
+
+.related-product:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .related-product {
+        width: 45%; 
+        margin-bottom: 20px; 
+    }
+
+    .product img {
+        width: 100%; 
+        max-width: 300px;
+    }
+
+    .product-details {
+        text-align: center; 
+    }
+}
