@@ -106,24 +106,34 @@
         <h2 class="ribbon-header">Shop by Categories</h2>
         <div class="categories">
             <div class="category">
-                <img src="https://via.placeholder.com/150" alt="Fruits & Vegetables">
-                <h3>Fruits & Vegetables</h3>
+                <a href="ShopByCategoryPage.php?category=Fruit,Vegetable">
+                    <img src="https://via.placeholder.com/150" alt="Fruits & Vegetables">
+                    <h3>Fruits & Vegetables</h3>
+                </a>
             </div>
             <div class="category">
-                <img src="https://via.placeholder.com/150" alt="Dairy & Eggs">
-                <h3>Dairy & Eggs</h3>
+                <a href="ShopByCategoryPage.php?category=Dairy">
+                    <img src="https://via.placeholder.com/150" alt="Dairy & Eggs">
+                    <h3>Dairy & Eggs</h3>
+                </a>
             </div>
             <div class="category">
-                <img src="https://via.placeholder.com/150" alt="Snacks & Beverages">
-                <h3>Snacks & Beverages</h3>
+                <a href="ShopByCategoryPage.php?category=Snacks,Beverage">
+                    <img src="https://via.placeholder.com/150" alt="Snacks & Beverages">
+                    <h3>Snacks & Beverages</h3>
+                </a>
             </div>
             <div class="category">
-                <img src="https://via.placeholder.com/150" alt="Frozen Foods">
-                <h3>Frozen Foods</h3>
+                <a href="ShopByCategoryPage.php?category=FrozenFood">
+                    <img src="https://via.placeholder.com/150" alt="Frozen Foods">
+                    <h3>Frozen Foods</h3>
+                </a>
             </div>
             <div class="category">
-                <img src="https://via.placeholder.com/150" alt="Pantry Staples">
-                <h3>Pantry Staples</h3>
+                <a href="ShopByCategoryPage.php?category=PantryStaple">
+                    <img src="https://via.placeholder.com/150" alt="Pantry Staples">
+                    <h3>Pantry Staples</h3>
+                </a>
             </div>
         </div>
     </section>
