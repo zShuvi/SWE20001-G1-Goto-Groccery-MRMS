@@ -28,6 +28,74 @@ session_start();
 
 
 <body>
+    <?php
+        //$_SESSION['active_user'] = 1;   //dummy session id. active_user tracks using user's ID. 
+        $userid = $_SESSION['active_user'];
+        include 'Database.php';
+        $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $username = $row["Username"];
+                $email = $row["Email"];
+            }
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            if ($_POST['username'] != $username || $_POST['email'] != $email)
+            {
+                $newUsername = $_POST['username'];
+                $newEmail = $_POST['email'];
+    
+                $sql = "UPDATE userstable SET Email = ?, Username = ? WHERE ID = ?"; //abstract
+    
+                if ($updateUser = $conn->prepare($sql)) //defines updatePassword
+                {
+                    $updateUser->bind_param("ssi", $newEmail, $newUsername, $userid); 
+                    /* the format of the input; 
+                    recommended to guard it with prepare() instead of query() for security (updating database) */
+    
+                    $updateUser->execute();
+                    $updateUser->close();
+                }
+                else 
+                {
+                    $_SESSION['error'] = "Error updating info.";
+                }
+            }
+            if ($_POST['newpassword'] != $password)
+            {
+                if ($_POST['newpasswordConfirm'] == $_POST['newpassword'])
+                {
+                    $newPassword = $_POST['newpassword'];
+
+                    $sql = "UPDATE userstable SET Password = ? WHERE ID = ?"; //abstract
+    
+                    if ($updatePassword = $conn->prepare($sql)) //defines updateUser
+                    {
+                        $updatePasswprd->bind_param("si", $newPassword, $userid); 
+                        /* the format of the input; 
+                        recommended to guard it with prepare() instead of query() for security (updating database) */
+        
+                        $updatePassword->execute();
+                        $updatePassword->close();
+                    }
+                    else 
+                    {
+                        $_SESSION['error'] = "Error updating info.";
+                    }
+                }
+                else
+                {
+                    $_SESSION['error'] = "Password must match confirmation.";
+                }
+            }
+                
+        }
+    ?>
 
     <!-- Navigation Sidebar -->
     <nav class="sidebar close">
@@ -182,7 +250,7 @@ session_start();
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" value="username">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $username ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Name</label>
@@ -190,7 +258,7 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="name@gmail.com">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $email ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Company</label>
