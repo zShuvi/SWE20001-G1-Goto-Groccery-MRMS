@@ -123,7 +123,7 @@ $conn->close();
             </div>
 
             <div class="register-link">
-                <p> Don't have an account? <a href="#">Register</a></p>
+                <p> Don't have an account? <a href="SignUp.php">Register</a></p>
             </div>
         </form>
 
