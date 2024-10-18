@@ -39,7 +39,61 @@ session_start();
             {
                 $username = $row["Username"];
                 $email = $row["Email"];
+                $password = $row["Password"];
             }
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            if ($_POST['username'] != $username || $_POST['email'] != $email)
+            {
+                $newUsername = $_POST['username'];
+                $newEmail = $_POST['email'];
+    
+                $sql = "UPDATE userstable SET Email = ?, Username = ? WHERE ID = ?"; //abstract
+    
+                if ($updateUser = $conn->prepare($sql)) //defines updateUser
+                {
+                    $updateUser->bind_param("ssi", $newEmail, $newUsername, $userid); 
+                    /* the format of the input; 
+                    recommended to guard it with prepare() instead of query() for security (updating database) */
+    
+                    $updateUser->execute();
+                    $updateUser->close();
+                }
+                else 
+                {
+                    $_SESSION['error'] = "Error updating info.";
+                }
+            }
+            if ($_POST['newpassword'] != $password)
+            {
+                if ($_POST['newpasswordConfirm'] == $_POST['newpassword'])
+                {
+                    $newPassword = $_POST['newpassword'];
+
+                    $sql = "UPDATE userstable SET Password = ? WHERE ID = ?"; //abstract
+    
+                    if ($updatePassword = $conn->prepare($sql)) //defines updatePassword
+                    {
+                        $updatePasswprd->bind_param("si", $newPassword, $userid); 
+                        /*the format of the input; 
+                        recommended to guard it with prepare() instead of query() for security (updating database) */
+        
+                        $updatePassword->execute();
+                        $updatePassword->close();
+                    }
+                    else 
+                    {
+                        $_SESSION['error'] = "Error updating info.";
+                    }
+                }
+                else
+                {
+                    $_SESSION['error'] = "Password must match confirmation.";
+                }
+            }
+                
         }
     ?>
 
@@ -131,15 +185,15 @@ session_start();
                                 <div class="card-body pb-2">
                                     <div class="form-group">
                                         <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" value=<?php echo $password ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">New password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="newpassword">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="newpasswordConfirm">
                                     </div>
                                 </div>
                             </div>
