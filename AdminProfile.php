@@ -161,7 +161,7 @@ session_start();
 
 
                     <li class="">
-                        <a href="#">
+                        <a href="AdminNotification.php">
                             <i class="bx bx-bell icon"></i>
                             <span class="text nav-text">Notification</span>
                         </a>
