@@ -1,3 +1,4 @@
+
 <?php
 // Start session and check if the user is logged in
 session_start();
@@ -10,6 +11,66 @@ session_start();
 
 // Include the database connection
 include 'Database.php';
+
+
+// UPDATE QUANTITY INTO DATABASE
+
+// Check if a form has been submitted to update the quantity
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the product ID and new quantity from the POST request
+    $productID = $_POST['productID'];
+    $newQuantity = $_POST['quantity'];
+    $role = $_SESSION['active_role'];
+    $name = $_SESSION['active_username'];
+
+    if ($role == "JuniorAdmin" || $role == "SeniorAdmin"){
+
+        // Prepare and execute the SQL query to update the quantity
+        $sql = "UPDATE ProductTable SET Quantity = ? WHERE ProductID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $newQuantity, $productID);
+
+        if ($stmt->execute()) {
+            $message = "Quantity updated successfully!";
+        } else {
+            $message = "Error updating quantity.";
+        }
+
+
+        $stmt->close();
+
+    } elseif ($role === 'Staff') {
+
+        // Fetch the original quantity from ProductTable
+        $sql = "SELECT Quantity FROM ProductTable WHERE ProductID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $productID);
+        $stmt->execute();
+        $stmt->bind_result($originalQuantity);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Insert a change request for Staff users
+        $sql = "INSERT INTO ChangeRequestTable (ProductID, Username, OriginalQuantity, NewQuantity, RequestStatus) VALUES (?, ?, ?, ?, 'Pending')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isii', $productID, $name, $originalQuantity, $newQuantity);
+
+        if ($stmt->execute()) {
+            $message = "Request sent to admin for approval!";
+        } else {
+            $message = "Error sending request.";
+        }
+
+
+        $stmt->close();
+    } else {
+        $message = "Unauthorized action.";
+    }
+    
+}
+
+
+// SEARCH FUNCTION - REQUIRED JAVASCRIPT
 
 // Check if this is an AJAX request for searching
 if (isset($_GET['search'])) {
@@ -25,12 +86,30 @@ if (isset($_GET['search'])) {
         while ($row = $result->fetch_assoc()) {
             echo '
             <div class="product-card">
-                <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '">
+                <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '" onerror="this.onerror=null; this.src=\'images/Placeholder.png\';">
+
                 <div class="product-info">
-                    <h4>' . $row["Name"] . '</h4>
-                    <p>' . $row["Description"] . '</p>
-                    <p>Quantity: ' . $row["Quantity"] . '</p>
+                    <h3> '. $row["Name"] .' </h3>
+                    <p><strong> Description: </strong>' . $row["Description"] . ' </p>
+                    <p><strong> Category: </strong>' . $row["Category"] . ' </p>
+                    <p><strong> Quantity: </strong>' . $row["Quantity"] . ' </p>
+                 </div>
+
+                            
+                <form method="POST" action="">
+
+                            
+                <div class="quantity-control">
+                    <input type="hidden" name="productID" value="' . $row["ProductID"] . '">
+                    <input type="number" class="quantity_" id="quantity_' . $row["ProductID"] . '" name="quantity" value="' . $row["Quantity"] . '" min="0">
                 </div>
+
+                            
+
+                <button type="submit" class="submit-btn">Update Quantity</button>
+
+                </form>
+
             </div>';
         }
     } else {
@@ -39,10 +118,14 @@ if (isset($_GET['search'])) {
     $conn->close();
     exit;
 }
-
-
-    
 ?>
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -52,10 +135,11 @@ if (isset($_GET['search'])) {
 	<meta name="description" content="Goto Grocery Admin Products Page">
 	<meta name="keywords" content="Goto Grocery, Admin" >
 	<meta name="author" content="G1" >
-	<title> Goto Grocery Admin Home Page </title>
+	<title> Goto Grocery Admin Product Page </title>
     
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 	<link href="styles/adminproduct_style.css" rel="stylesheet">
+
 </head>
 
 
@@ -126,7 +210,7 @@ if (isset($_GET['search'])) {
 
 
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="AdminNotification.php">
                             <i class="bx bx-bell icon"></i>
                             <span class="text nav-text">Notification</span>
                         </a>
@@ -172,7 +256,7 @@ if (isset($_GET['search'])) {
     <!-- Home, outside of Navigation Side Bar -->
 
     <section class="home">
-        <div class="text">Product</div>
+        
 
         <div class="container_order">
             <div class="form-header">
@@ -181,7 +265,13 @@ if (isset($_GET['search'])) {
     
             <!-- Search Bar -->
             <div class="form-group">
-                <label for="search">Search for available stock</label>
+                <?php
+                    if(isset($message)){
+                        echo "<p class='update-msg'> $message </p>";
+                    }
+
+                ?>
+
                 <input type="text" id="search" placeholder="Type to search..." oninput="searchStock()">
             </div>
     
@@ -197,13 +287,29 @@ if (isset($_GET['search'])) {
                     while($row = $result->fetch_assoc()) { //Image not working//
                         echo '
                         <div class="product-card">
-                            <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '">
+                            <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '" onerror="this.onerror=null; this.src=\'images/Placeholder.png\';">
 
                             <div class="product-info">
-                                <h4> '. $row["Name"] .' </h4>
-                                <p> ' . $row["Description"] . ' </p>
-                                <p> Quantity: ' . $row["Quantity"] . ' </p>
+                                <h3> '. $row["Name"] .' </h3>
+                                <p><strong> Description: </strong>' . $row["Description"] . ' </p>
+                                <p><strong> Category: </strong>' . $row["Category"] . ' </p>
+                                <p><strong> Quantity: </strong>' . $row["Quantity"] . ' </p>
                             </div>
+
+                            
+                            <form method="POST" action="">
+
+                            
+                            <div class="quantity-control">
+                                <input type="hidden" name="productID" value="' . $row["ProductID"] . '">
+                                <input type="number" class="quantity_" id="quantity_' . $row["ProductID"] . '" name="quantity" value="' . $row["Quantity"] . '" min="0">
+                            </div>
+
+                            
+
+                            <button type="submit" class="submit-btn">Update Quantity</button>
+
+                            </form>
 
                         </div>';
                     }
@@ -215,8 +321,6 @@ if (isset($_GET['search'])) {
 
             </div>
     
-            <!-- Proceed Button to view order summary -->
-            <button id="proceed-btn" class="submit-btn"  onclick="proceedToSummary()">Proceed to Confirmation</button>
         </div>
     
 
@@ -226,6 +330,7 @@ if (isset($_GET['search'])) {
     <!-- Script for admin side bar -->
     <script src="scripts/adminsidebar.js"></script>
     <script src="scripts/adminproduct.js"></script>
+
 
   
 </body>
