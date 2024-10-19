@@ -10,7 +10,7 @@
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
     --text-color: #707070;
-    --button-color: #74ebd5;
+    --button-color: #5a96ea;
     --box-shadow-color: rgba(0, 0, 0, 0.1);
     --product-card-color: #d9e4ffab;
 
@@ -35,7 +35,7 @@ body.dark
     --primary-color-light: #3A3B3C;
     --toggle-color: #FFF;
     --text-color: #CCC;
-    --button-color: #1a4f45;
+    --button-color: #343f63;
     --box-shadow-color: rgba(255, 255, 255, 0.2);
     --product-card-color: #a8a8a8ab;
 }
@@ -96,7 +96,6 @@ body
 .sidebar.close
 {
     width: 88px;
-    transform: translateY(-10px);
 }
 
 
@@ -440,6 +439,7 @@ body.dark button:hover
     text-align: center;
     height: 90%;
     transition: var(--trans-05);
+    margin-top: 25px;
 }
 
 
@@ -453,6 +453,7 @@ body.dark button:hover
     border: 1px solid var(--body-color);
     margin-bottom: 20px;
     transition: var(--trans-05);
+    margin-top: 20px;
 }
 
 #search:focus{
@@ -461,12 +462,12 @@ body.dark button:hover
 
 
 
-/* Limit the product container to show 3 cards at a time */
+
 .product-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 350px; /* Adjust this based on the size of your product cards */
+    height: 450px; /* Adjust this based on the size of your product cards */
     overflow-y: auto; /* Enables scrolling when content overflows */
     padding-right: 10px; /* Adds space for scrollbar */
 }
@@ -496,8 +497,8 @@ body.dark button:hover
 }
 
 .product-card img {
-    width: 70px;
-    height: 70px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     margin-right: 15px;
 }
@@ -551,29 +552,37 @@ body.dark button:hover
 
 
 .submit-btn:hover {
-    background: #66d3c2;
+    background: #9dd3ff;
 }
 
-#proceed-btn {
-    margin-top: 50px;
-    margin-right: 20px;
-    float: right; /* Aligns the button to the right inside the container */
-    display: block; /* Always visible */
-    background: var(--button-color);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-05);
+body.dark .submit-btn:hover{
+    background: #1a252e;
 }
 
-#proceed-btn:hover {
-    background: #66d3c2;
+
+
+
+.quantity_ {
+    width: 80px; /* Adjust the width to fit the design */
+    height: 40px;
+    padding: 8px; /* Add some padding for better spacing */
+    font-size: 16px; /* Adjust the font size */
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    color: #333; /* Text color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: border-color 0.3s ease; /* Smooth transition on focus */
 }
 
+.quantity_:focus {
+    border-color: #007bff; /* Border color change on focus */
+    outline: none; /* Remove default outline */
+}
+
+.update-msg{
+    font-size: 25px;
+}
 
 
 
