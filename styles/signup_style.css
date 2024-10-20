@@ -125,6 +125,35 @@ body{
 }
 
 
+/* For password mismatch message */
+/* !important is so that the style will take priorization over others */
+.password-mismatch {
+    border: 2px solid red !important;
+}
+
+.password-match {
+    border: 2px solid lime !important;
+}
+
+#confirm-password-message {
+    color: red;
+    display: none;
+}
+
+#error-message {
+    color: red;
+    font-weight: bold;
+    background-color: #f8d7da;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    display: none;
+}
+
+
 
 
 
