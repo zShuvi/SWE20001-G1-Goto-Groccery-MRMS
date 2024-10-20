@@ -101,7 +101,7 @@ session_start();
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
     <nav class="navbar">
-        <a href="Home.php">home</a>
+        <a href="Home.html">home</a>
         <a href="#features">features</a>
         <a href="#products">products</a>
         <a href="#categories">categories</a>
@@ -113,13 +113,10 @@ session_start();
         <div class="fa fa-shopping-cart" id="cart-btn"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">
-                <li><a href="UserProfile.php">View Profile</a></li>
-                <li><a href="Member.php">Member</a></li>
-                <li><a href="Login.php?logout=true">Logout</a></li>
+                <!-- Content will be populated by JavaScript -->
             </ul>
         </div>
-            </ul>
-        </div>
+        <label class="user">Aaron</label>
     </div>
     </header>
 
@@ -165,7 +162,7 @@ session_start();
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" value=<?php echo $username ?>>
+                                        <input type="text" class="form-control mb-1" value="username">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Name</label>
@@ -173,7 +170,7 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value=<?php echo $email ?>>
+                                        <input type="text" class="form-control mb-1" value="name@gmail.com">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Company</label>
@@ -185,15 +182,15 @@ session_start();
                                 <div class="card-body pb-2">
                                     <div class="form-group">
                                         <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control" value=<?php echo $password ?>>
+                                        <input type="password" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">New password</label>
-                                        <input type="password" class="form-control" name="newpassword">
+                                        <input type="password" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control" name="newpasswordConfirm">
+                                        <input type="password" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -276,6 +273,7 @@ session_start();
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>
+    <script src="scripts/home.js"></script>
 </body>
 
 
