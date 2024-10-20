@@ -1,3 +1,39 @@
+<?php
+// Start session
+session_start();
+
+include 'Database.php';
+
+// Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the input from the form
+    $usr_name = $_POST["username"];
+    $email = $_POST["email"];
+    $phonenumber = $_POST["phone_number"];
+    $dob = $_POST["date_of_birth"];
+    $gender = $_POST["gender"];
+    $pwd = $_POST["password"];
+
+    // Prepare the SQL query to create user
+    $sql = "INSERT INTO userstable (Username, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (?, ?, ?, ?, ?, ?)";
+
+    if ($createUser = $conn->prepare($sql)) //defines createUser
+    {
+        $createUser->bind_param("ssssss", $usr_name, $email, $phonenumber, $dob, $gender, $pwd); 
+        /* the format of the input; 
+        recommended to guard it with prepare() instead of query() for security (updating database) */
+
+        $createUser->execute();
+        $createUser->close();
+    }
+    else 
+    {
+        $_SESSION['error'] = "Error creating user.";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
