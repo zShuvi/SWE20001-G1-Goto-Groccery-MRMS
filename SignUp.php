@@ -13,18 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dob = $_POST["date_of_birth"];
     $gender = $_POST["gender"];
     $pwd = $_POST["password"];
+    $role = "Member";
 
     // Prepare the SQL query to create user
-    $sql = "INSERT INTO userstable (Username, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO userstable (Role, Username, Email, PhoneNumber, DateOfBirth, Gender, Password) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     if ($createUser = $conn->prepare($sql)) //defines createUser
     {
-        $createUser->bind_param("ssssss", $usr_name, $email, $phonenumber, $dob, $gender, $pwd); 
+        $createUser->bind_param("sssssss", $role, $usr_name, $email, $phonenumber, $dob, $gender, $pwd); 
         /* the format of the input; 
         recommended to guard it with prepare() instead of query() for security (updating database) */
 
         $createUser->execute();
         $createUser->close();
+
+        Header("Location: Login.php");
     }
     else 
     {
@@ -49,27 +52,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <div class="design">
-        <form action="#" class="form">
+        <form method="POST" action="#" class="form">
             <h1>Sign Up <i class='bx bxs-user'></i></h1>
             <div class="input-box">
                 <label>Full Name</label>
-                <input type="text" placeholder="Enter full name" required/>
+                <input type="text" placeholder="Enter full name" name="username" required/>
             </div>
 
             <div class="input-box">
                 <label>Email Address </label>
-                <input type="text" placeholder="Enter email address" required/>
+                <input type="text" placeholder="Enter email address" name="email" required/>
             </div>
 
             <div class="column">
                 <div class="input-box">
                     <label>Phone Number </label>
-                    <input type="text" placeholder="Enter phone number" required/>
+                    <input type="text" placeholder="Enter phone number" name="phone_number" required/>
                 </div>
 
                 <div class="input-box">
                     <label>Birth Date</label>
-                    <input type="text" placeholder="Enter birth date" required/>
+                    <input type="date" placeholder="Enter birth date" name="date_of_birth" required/>
                 </div>
             </div>
 
@@ -77,31 +80,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Gender</h3>
                 <div class="gender-option">
                     <div class="gender">
-                        <input type="radio" id="check-male" name="gender" checked />
+                        <input type="radio" id="check-male" name="gender" value="M" checked />
                         <label for="check-male">Male</label>
                     </div>
                     <div class="gender">
-                        <input type="radio" id="check-female" name="gender" checked />
+                        <input type="radio" id="check-female" name="gender" value="F" checked />
                         <label for="check-female">Female</label>
                     </div>
                 </div>
             </div>
 
             <div class="input-box">
-                <label>Password </label>
-                <input type="text" placeholder="Create a password" required/>
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Create a password" name="password" required />
             </div>
 
             <div class="input-box">
-                <label>Confirm Password </label>
-                <input type="text" placeholder="Confirm your password" required/>
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password" required />
+                <p id="error-message">Passwords do not match!</p>
             </div>
 
-            <button>Submit</button>
+            <button id="submit-btn">Submit</button>
 
         </form>
     </div>
 
-</body>
+    <script src="scripts/signup.js"></script>
 
+</body>
 </html>
