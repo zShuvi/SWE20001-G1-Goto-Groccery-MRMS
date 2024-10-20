@@ -87,15 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <div class="input-box address">
-                <label>Address</label>
-                <input type="text" placeholder="Enter street address" required/>
-                <input type="text" placeholder="Enter street address line 2" required/>
-                <input type="text" placeholder="Enter your state" required/>
-                <div class="column">
-                <input type="text" placeholder="Enter your city" required/>
-                <input type="text" placeholder="Enter postal code" required/>
-                </div>
+            <div class="input-box">
+                <label>Password </label>
+                <input type="text" placeholder="Create a password" required/>
+            </div>
+
+            <div class="input-box">
+                <label>Confirm Password </label>
+                <input type="text" placeholder="Confirm your password" required/>
             </div>
 
             <button>Submit</button>
