@@ -135,11 +135,6 @@ body{
     border: 2px solid lime !important;
 }
 
-#confirm-password-message {
-    color: red;
-    display: none;
-}
-
 #error-message {
     color: red;
     font-weight: bold;
