@@ -101,7 +101,7 @@ session_start();
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
     <nav class="navbar">
-        <a href="Home.html">home</a>
+        <a href="Home.php">home</a>
         <a href="#features">features</a>
         <a href="#products">products</a>
         <a href="#categories">categories</a>
@@ -162,7 +162,7 @@ session_start();
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" value="username">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $username ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Name</label>
@@ -170,7 +170,7 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="name@gmail.com">
+                                        <input type="text" class="form-control mb-1" value=<?php echo $email ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Company</label>
@@ -182,15 +182,15 @@ session_start();
                                 <div class="card-body pb-2">
                                     <div class="form-group">
                                         <label class="form-label">Current password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" value=<?php echo $password ?>>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">New password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="newpassword">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Repeat new password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="newpasswordConfirm">
                                     </div>
                                 </div>
                             </div>
