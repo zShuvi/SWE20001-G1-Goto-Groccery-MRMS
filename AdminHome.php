@@ -105,6 +105,13 @@ session_start();
                             <span class="text nav-text">Profile</span>
                         </a>
                     </li>
+
+                    <li class="nav-link">
+                        <a href="AdminEditUser.php">
+                            <i class="bx bxs-user-detail icon"></i>
+                            <span class="text nav-text">EditUser</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -130,8 +137,6 @@ session_start();
                     </div>
                 </li>
             </div>
-
-
         </div>
     </nav>
 
