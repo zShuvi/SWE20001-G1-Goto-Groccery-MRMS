@@ -353,6 +353,13 @@ body.dark .switch::before
     left: 25px;
 }
 
+.bottom-content.JuniorAdmin{
+    transform: translateY(-16px);
+}
+
+.bottom-content.SeniorAdmin{
+    transform: translateY(-16px);
+}
 
 
 
