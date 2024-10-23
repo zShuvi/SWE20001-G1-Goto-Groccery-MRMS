@@ -174,6 +174,13 @@ session_start();
                             <span class="text nav-text">Profile</span>
                         </a>
                     </li>
+
+                    <li class="">
+                        <a href="AdminEditUser.php">
+                            <i class="bx bxs-user-detail icon"></i>
+                            <span class="text nav-text">EditUser</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 

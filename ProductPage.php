@@ -1,3 +1,13 @@
+<?php
+    session_start();
+
+    // Needed this, cause if the variable is unset, it sometimes pop up long error message
+    // Which causes the entire html display to shift sometimes.
+    if (!isset($_SESSION['logged_in'])){
+        $_SESSION['logged_in'] = 0;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,19 +15,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery Store - Product Grid</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="ProductStyle.css">
+    <link rel="stylesheet" href="/styles/ProductStyle.css">
 </head>
 
 <body>
+<input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
     <header class="header">
             <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
         <nav class="navbar">
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#products">Products</a>
-            <a href="#categories">Categories</a>
-            <a href="#reviews">Reviews</a>
+            <a href="Home.php">Home</a>
+            <a href="Home.php#features">Features</a>
+            <a href="ProductPage.php">Products</a>
+            <a href="Home.php#categories">Categories</a>
+            <a href="Home.php#reviews">Reviews</a>
         </nav>
 
         <div class="icons">
@@ -29,6 +40,7 @@
                 </ul>
             </div>
         </div>
+        <!-- <label><?php echo $_SESSION["active_username"]?></label> --> <!-- display name in navbar -->
     </header>
 
     <div class="container">
@@ -92,5 +104,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="scripts/home.js"></script>
+
 </body>
 </html>

@@ -25,7 +25,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery Store - Products in <?php echo htmlspecialchars(implode(' & ', $category)); ?></title>
-    <link rel="stylesheet" href="ProductStyle.css">
+    <link rel="stylesheet" href="/styles/ProductStyle.css">
 </head>
 
 <body>
@@ -37,7 +37,19 @@ $result = $conn->query($sql);
             <a href="#products">Products</a>
             <a href="#categories">Categories</a>
             <a href="#reviews">Reviews</a>
+
         </nav>
+
+        
+        <div class="icons">
+            <div class="fa fa-bars" id="menu-btn"></div>
+            <div class="fa fa-shopping-cart" id="cart-btn"></div>
+            <div class="fa fa-user" id="user-btn">
+                <ul id="dropdownList" class="dropdown-content">
+                    <!-- Content will be populated by JavaScript -->
+                </ul>
+            </div>
+        </div>
     </header>
 
     <div class="container">
