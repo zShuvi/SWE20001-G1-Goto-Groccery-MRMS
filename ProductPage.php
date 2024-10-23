@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery Store - Product Grid</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/styles/ProductStyle.css">
+    <link rel="stylesheet" href="styles/ProductStyle.css">
 </head>
 
 <body>
@@ -105,7 +105,7 @@
         </div>
     </footer>
 
-    <script src="scripts/home.js"></script>
+    <script src="scripts/dropdown.js"></script>
 
 </body>
 </html>
