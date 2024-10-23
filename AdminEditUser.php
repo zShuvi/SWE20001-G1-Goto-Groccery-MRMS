@@ -113,12 +113,18 @@ $result = $conn->query($sql);
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="AdminEditUser.php">
-                            <i class="bx bxs-user-detail icon"></i>
-                            <span class="text nav-text">EditUser</span>
-                        </a>
-                    </li>
+                    <?php
+                        if (!($_SESSION['active_role'] == "Staff")){
+                            echo'
+                                <li class="">
+                                    <a href="AdminEditUser.php">
+                                        <i class="bx bx-edit icon"></i>
+                                        <span class="text nav-text">EditUser</span>
+                                    </a>
+                                </li>                            
+                            ';
+                        }
+                    ?>
                 </ul>
             </div>
 
@@ -198,6 +204,7 @@ $result = $conn->query($sql);
         <button class="add-user-button" onclick="openAddPopup()">Add User</button>
     </div>
 </section>
+
 
 <!-- Edit User Popup Form -->
 <div id="overlay" class="overlay" onclick="closeEditPopup()"></div>
