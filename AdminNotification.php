@@ -178,12 +178,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     </li>
 
                     
-                    <li class="nav-link">
-                        <a href="AdminEditUser.php">
-                            <i class="bx bxs-user-detail icon"></i>
-                            <span class="text nav-text">EditUser</span>
-                        </a>
-                    </li>
+                    <?php
+                        if (!($_SESSION['active_role'] == "Staff")){
+                            echo'
+                                <li class="nav-link">
+                                    <a href="AdminEditUser.php">
+                                        <i class="bx bx-edit icon"></i>
+                                        <span class="text nav-text">EditUser</span>
+                                    </a>
+                                </li>                            
+                            ';
+                        }
+                    ?>
                 </ul>
             </div>
 
