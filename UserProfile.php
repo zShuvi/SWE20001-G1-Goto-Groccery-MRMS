@@ -100,6 +100,8 @@ session_start();
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
+        <input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
+
     <nav class="navbar">
         <a href="Home.php">home</a>
         <a href="#features">features</a>
@@ -116,7 +118,9 @@ session_start();
                 <!-- Content will be populated by JavaScript -->
             </ul>
         </div>
-        <label class="user">Aaron</label>
+        <?php
+            echo '<label class="user"> '. $_SESSION['active_username'] . '</label>';
+        ?>
     </div>
     </header>
 
@@ -273,7 +277,7 @@ session_start();
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>
-    <script src="scripts/home.js"></script>
+    <script src="scripts/dropdown.js"></script>
 </body>
 
 
