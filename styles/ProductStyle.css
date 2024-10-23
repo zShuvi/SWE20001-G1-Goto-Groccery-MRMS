@@ -320,3 +320,44 @@ footer .footer-links {
         max-width: 100%;
     }
 }
+
+/* User Button Dropdown */
+#user-btn {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px; /* Smaller width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px; /* Rounded corners for a clean look */
+  }
+  
+  .dropdown-content li {
+    padding: 2px 10px; /* Smaller padding */
+    text-align: left;
+  }
+  
+  .dropdown-content li a {
+    color: black;
+    text-decoration: none;
+    font-size: 14px; /* Smaller font size */
+    display: block;
+  }
+  
+  .dropdown-content li:hover {
+    background-color: #27ae60;
+    border-radius: 5px;
+  }
+  
+  /* Show the dropdown content when hovering over the user icon */
+  #user-btn:hover .dropdown-content {
+    display: block;
+  }
