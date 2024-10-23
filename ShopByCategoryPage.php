@@ -1,6 +1,8 @@
 <?php
 include 'Database.php'; // include the database connection
 
+session_start();
+
 // Get the category from the URL
 $category = isset($_GET['category']) ? explode(',', $_GET['category']) : [];
 
@@ -25,18 +27,22 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery Store - Products in <?php echo htmlspecialchars(implode(' & ', $category)); ?></title>
-    <link rel="stylesheet" href="/styles/ProductStyle.css">
+    <link rel="stylesheet" href="styles/ProductStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+
+<input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
+
     <header class="header">
         <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
         <nav class="navbar">
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#products">Products</a>
-            <a href="#categories">Categories</a>
-            <a href="#reviews">Reviews</a>
+            <a href="Home.php">Home</a>
+            <a href="Home.php#features">Features</a>
+            <a href="ProductPage.php">Products</a>
+            <a href="Home.php#categories">Categories</a>
+            <a href="Home.php#reviews">Reviews</a>
 
         </nav>
 
@@ -80,5 +86,7 @@ $result = $conn->query($sql);
     <footer>
         <p>&copy; 2024 Goto Grocery. All rights reserved.</p>
     </footer>
+
+    <script src="scripts/dropdown.js"></script>
 </body>
 </html>
