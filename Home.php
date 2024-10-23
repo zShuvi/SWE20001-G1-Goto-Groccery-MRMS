@@ -199,7 +199,8 @@
         </div>
     </footer>
 
-    <script src="scripts/home.js"></script>
+    <script src="scripts/slider.js"></script>
+    <script src="scripts/dropdown.js"></script>
 </body>
 
 
