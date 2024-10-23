@@ -33,10 +33,10 @@
 
     <nav class="navbar">
         <a href="#home">home</a>
-        <a href="#features">features</a>
-        <a href="#products">products</a>
-        <a href="#categories">categories</a>
-        <a href="#reviews">reviews</a>
+        <a href="Home.php#features">features</a>
+        <a href="ProductPage.php">products</a>
+        <a href="Home.php#categories">categories</a>
+        <a href="Home.php#reviews">reviews</a>
     </nav>
 
     <div class="icons">
@@ -133,7 +133,7 @@
                 <a href="ShopByCategoryPage.php?category=PantryStaple">
                     <img src="https://via.placeholder.com/150" alt="Pantry Staples">
                     <h3>Pantry Staples</h3>
-                </a>
+                </a>
             </div>
         </div>
     </section>
