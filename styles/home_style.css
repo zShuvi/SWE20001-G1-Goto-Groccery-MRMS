@@ -401,3 +401,164 @@ footer .footer-links {
 .ribbon-header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
+/*Option sytyling*/
+.split-screen {
+    display: flex;
+    height: 80vh; /* Adjust as needed */
+    text-align: center;
+}
+
+.option {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-size: 1.5em;
+    color: white; /* White text for better contrast */
+    background-size: cover; /* Ensure the image covers the space */
+    background-position: center; /* Center the image */
+    position: relative; /* Relative positioning for child elements */
+    overflow: hidden; /* Prevents content overflow */
+    background-color: rgba(0, 0, 0, 0.5); /* Fallback color */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); /* Initial text shadow for slight outline effect */
+}
+
+.search {
+    background-image: url('/images/Option1.jpg'); /* Replace with your search image path */
+}
+
+.sort {
+    background-image: url('/images/Option2.jpg'); /* Replace with your sort image path */
+}
+
+
+
+.option h2 {
+    transition: transform 0.9s ease;
+    color:  White;
+    cursor: pointer; /* Changes mouse pointer*/
+}
+
+.option:hover h2 {
+    font-size: 1.8em; /* Increase font size on hover */
+    text-shadow: 
+        -1px -1px 0 rgba(0, 0, 0, 0.8),  
+         1px -1px 0 rgba(0, 0, 0, 0.8),  
+        -1px  1px 0 rgba(0, 0, 0, 0.8),  
+         1px  1px 0 rgba(0, 0, 0, 0.8); /* Outline effect */
+}
+
+/* Scale effect on hover */
+.option:hover {
+    transform: scale(1.05);
+}
+
+/* Apply blur only to the non-hovered option */
+.split-screen:hover .option:not(:hover) {
+    filter: blur(3px);
+}
+
+/* Popup for Product.php */
+/* Popup for Category Selection */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Popup Content Styling */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Popup Content Styling */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Popup Content Styling */
+.popup-content {
+    background: white; /* White background for the popup */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    max-width: 400px; /* Maximum width for the popup */
+    width: 90%; /* Responsive width */
+    text-align: center; /* Centered text */
+    transition: transform 0.3s; /* Smooth transitions */
+}
+
+/* Close Button */
+.close-btn {
+    color: #ff4d4d; /* Red color for the close button */
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px; /* Positioning the close button */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s; /* Smooth transition for opacity */
+}
+
+.popup-content:hover .close-btn {
+    opacity: 1; /* Show the close button */
+}
+
+
+/* Category List Styling */
+.category-list {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* No padding */
+    margin: 20px 0; /* Margin around the list */
+}
+
+/* Category List Items */
+.category-list li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s; /* Smooth background change */
+}
+
+.category-list li:hover {
+    background: blue; /* Change background to blue on hover */
+    color: white; /* Change text color to white for better contrast */
+    font-weight: bold;
+}
+
+/* Category Links */
+.category-list a {
+    text-decoration: none; /* No underline for links */
+    color: black; /* Black text color */
+}
+
+.popup-content:hover {
+    transform: scale(1.05); /* Slightly enlarge the popup */
+    background-color: white; /* Change background to blue */
+}
