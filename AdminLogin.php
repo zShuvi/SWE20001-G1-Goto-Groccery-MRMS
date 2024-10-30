@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $result = $conn->query($sql);
 
-    if ($result->num_rows == 1)
+    if ($result->num_rows > 0)
         {
             while($row = $result->fetch_assoc())
             { 
@@ -50,17 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         header("Location: AdminLogin.php");
                         exit();
                     }
-                }
-                else 
-                {
-                    //Wrong password
-                    $_SESSION['logged_in'] = false;
-                    $_SESSION['error'] = "Invalid password. Please try again.";
-                    header("Location: AdminLogin.php");
-                    exit();
-                    
-                }
+                }  
             }
+
+            //Wrong password
+            $_SESSION['logged_in'] = false;
+            $_SESSION['error'] = "Invalid password. Please try again.";
+            header("Location: AdminLogin.php");
+            exit();
+            
         }
         else 
         {
