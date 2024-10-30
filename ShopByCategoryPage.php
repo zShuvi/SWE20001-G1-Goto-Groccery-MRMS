@@ -40,8 +40,7 @@ $result = $conn->query($sql);
         <nav class="navbar">
             <a href="Home.php">Home</a>
             <a href="Home.php#features">Features</a>
-            <a href="ProductPage.php">Products</a>
-            <a href="Home.php#categories">Categories</a>
+            <a href="Product.php">Products</a>
             <a href="Home.php#reviews">Reviews</a>
 
         </nav>

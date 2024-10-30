@@ -8,26 +8,28 @@
     }
 ?>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grocery Store - Product Grid</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="Goto Grocery Home Page">
+    <meta name="keywords" content="Goto Grocery, Home">
+    <meta name="author" content="G1">
+    <title>Goto Grocery Admin Home Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles/ProductStyle.css">
+    <link href="styles/home_style.css" rel="stylesheet">
 </head>
 
 <body>
-<input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
     <header class="header">
-            <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
+        <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
 
         <nav class="navbar">
-            <a href="Home.php">Home</a>
-            <a href="Home.php#features">Features</a>
-            <a href="Product.php">Products</a>
-            <a href="Home.php#reviews">Reviews</a>
+            <a href="#home">home</a>
+            <a href="Home.php#features">features</a>
+            <a href="Product.php">products</a>
+            <a href="Home.php#reviews">reviews</a>
         </nav>
 
         <div class="icons">
@@ -39,39 +41,44 @@
                 </ul>
             </div>
         </div>
-        <!-- <label><?php echo $_SESSION["active_username"]?></label> --> <!-- display name in navbar -->
     </header>
 
-    <div class="container">
-    <h2 class="ribbon-header">Products</h2>
-        <div class="product-grid">
-
-            <?php 
-            include 'Database.php'; // include the database connection
-            $sql = "SELECT * FROM ProductTable"; // get all products
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) { 
-                    echo '
-                    <div class="product">  
-                        <a href="ProductDetails.php?id=' . $row["ProductID"] . '">
-                            <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '">
-                            <h2>' . $row["Name"] . '</h2>
-                            <p class="price">RM' . $row["Price"] . '</p>
-                        </a>
-                    </div>';
-                }
-            } else {
-                echo "No products found!";
-            }
-            $conn->close(); // close the database connection
-            ?>
+    <!-- Split-screen options -->
+    <div class="split-screen">
+        <div class="option search" id="search-option">
+            <a href="ProductPage.php"><h2>Search All Products</h2></a>
+        </div>
+        <div class="option sort" id="sort-option" onclick="openCategoryPopup()">
+            <h2>Sort By Category</h2>
         </div>
     </div>
 
-    <footer> <!-- not showing -->
+<!-- Popup Modal for Categories -->
+<div id="categoryPopup" class="popup-modal">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closeCategoryPopup()">&times;</span>
+        <h3>Select Category</h3>
+        <ul class="category-list">
+            <a href="ShopByCategoryPage.php?category=Fruit,Vegetable">
+                <li>Fruits & Vegetables</li>
+            </a>
+            <a href="ShopByCategoryPage.php?category=Dairy">
+                <li>Dairy & Eggs</li>
+            </a>
+            <a href="ShopByCategoryPage.php?category=Snacks,Beverage">
+                <li>Snacks & Beverages</li>
+            </a>
+            <a href="ShopByCategoryPage.php?category=FrozenFood">
+                <li>Frozen Foods</li>
+            </a>
+            <a href="ShopByCategoryPage.php?category=PantryStaple">
+                <li>Pantry Staples</li>
+            </a>
+        </ul>
+    </div>
+</div>
+
+    <footer>
         <div class="footer-container">
             <div class="footer-links">
                 <div class="footer-column">
@@ -97,14 +104,16 @@
                 </div>
             </div>
             <div class="footer-subscribe">
-                <h4>Subscribe To Our Newsletter</h4>
-                <input type="email" placeholder="Your Email...">
+                <h4>Subscribe to Our Newsletter</h4>
+                <input type="email" placeholder="Your email...">
                 <button>Subscribe</button>
             </div>
         </div>
     </footer>
 
+    <script src="scripts/slider.js"></script>
     <script src="scripts/dropdown.js"></script>
-
+    <script src="scripts/CategoryPopup.js"></script>
 </body>
 </html>
+

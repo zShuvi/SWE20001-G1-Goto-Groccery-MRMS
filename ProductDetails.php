@@ -26,8 +26,7 @@
         <nav class="navbar">
             <a href="Home.php">Home</a>
             <a href="Home.php#features">Features</a>
-            <a href="ProductPage.php">Products</a>
-            <a href="Home.php#categories">Categories</a>
+            <a href="Product.php">Products</a>
             <a href="Home.php#reviews">Reviews</a>
         </nav>
 
@@ -84,7 +83,7 @@
             if (!$result) {
                 echo "Error in query: " . $conn->error; // Debugging the SQL error
             } elseif ($result->num_rows > 0) {
-                echo "<h3 class='related-products-title'>People Also Search For</h3>"; // Using a class for styling
+                echo "<h3 class='related-products-title'> Other Products </h3>"; // Using a class for styling
                 echo "<div class='related-products-container'>";
                 while ($row = $result->fetch_assoc()) {
                     echo "
