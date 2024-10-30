@@ -72,11 +72,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $stmt->close();
     
     }
-
-
-
-
 }
+
+
+
+
 
 
 ?>
@@ -220,15 +220,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
     </nav>
 
+
+
     <!-- Home, outside of Navigation Side Bar -->
 
     <section class="home">
         <div class="text">Notification</div>
 
         <div id="search-results" class="product-container">
-                <?php 
 
+
+                <?php 
                 include 'Database.php'; // include the database connection
+
+                $hasNotifcation = false;
 
                 if($_SESSION['active_role'] == "JuniorAdmin" || $_SESSION['active_role'] == "SeniorAdmin"){
                     $status = "('Pending')";
@@ -242,11 +247,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                             FROM ChangeRequestTable
                             NATURAL JOIN ProductTable
                             WHERE RequestStatus IN $status
-                    ";
+                    ";  
 
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
+
+                        $hasNotifcation = true;
+
                         while($row = $result->fetch_assoc()) {
 
                             echo '
@@ -265,7 +273,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                                         <p><strong>Request Date: </strong> ' . $row['RequestDate'] . '</p>
                                     </div>';
 
-                                    if ($_SESSION['active_role'] == "JuniorAdmin" || $_SESSION['active_role'] == "SeniorAdmin"){             
+                                if ($_SESSION['active_role'] == "JuniorAdmin" || $_SESSION['active_role'] == "SeniorAdmin"){             
                                     
                                     echo '
                                     <form method="POST" action="">
@@ -295,34 +303,67 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                                 echo '</div>';
 
                         }
-                    } else {
+                    } 
 
-                        if($_SESSION['active_role'] == "Staff"){
 
-                            echo '
-                            <div class="empty-notifications">
-                                <p class="sad-smiley">☹</p>
-                                <p>No Notifications.</p>
-                            </div>
-                            ';
+                // Section for Low Stock Notifications
+                    $lowStockSql = "
+                    SELECT ProductID, Name, Image, Quantity, Category
+                    FROM ProductTable
+                    WHERE Quantity < 10
+                ";
 
-                        } else {
+                $lowStockResult = $conn->query($lowStockSql);
 
-                            echo '
-                            <div class="empty-notifications">
-                                <p class="sad-smiley">☹</p>
-                                <p>No Pending Requests.</p>
-                            </div>
-                            ';
+                if ($lowStockResult->num_rows > 0) {
 
-                        }
-                        
+                    $hasNotifcation = true;
+
+                    echo '<h1 style="color: var(--text-color);">Low Stock Alerts</h1>';
+
+                    while($lowStockRow = $lowStockResult->fetch_assoc()) {
+                        echo '
+                            <div class="product-card">
+                                <img src="' . $lowStockRow["Image"] . '" alt="' . $lowStockRow["Name"] . '" onerror="this.onerror=null; this.src=\'images/Placeholder.png\';">
+                                
+                                <div class="product-info">
+                                    <h3 style="color: var(--text-color); transition: var(--trans-05);" > '. $lowStockRow["Name"] .' </h3>
+                                    <p><strong> Category: </strong>' . $lowStockRow["Category"] . ' </p>
+                                    <p><strong> Quantity: </strong>' . $lowStockRow["Quantity"] . ' </p>
+                                    <p style="color: orange;"><strong>Alert:</strong> Stock is below threshold!</p>
+                                </div>
+                                
+                                    <a href="AdminStockOrder.php">
+                                        <button class="ok-btn">
+                                            <span>Order Stock</span>
+                                        </button>
+                                    </a>
+                                
+                            </div>';
                     }
+                }
+
+
+
+                if(!$hasNotifcation){
+
+                    echo '
+                    <div class="empty-notifications">
+                        <p class="sad-smiley">☹</p>
+                        <p>No Notifications.</p>
+                    </div>
+                    ';
+
+                } 
+
+
+
+
+
 
 
                     
                 $conn->close(); // close the database connection
-
 
                 ?>
 
