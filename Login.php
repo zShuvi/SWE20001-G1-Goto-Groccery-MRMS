@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $result = $conn->query($sql);
 
-    if ($result->num_rows == 1)
+    if ($result->num_rows > 0)
         {
             while($row = $result->fetch_assoc())
             { 
@@ -41,18 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['active_username'] = $row["Username"];
                     header("Location: Home.php");
                     exit(); // Terminate the script here after redirect
-                }
-                else 
-                {
-                    //Wrong password
-                    $_SESSION['logged_in'] = false;
-                    $_SESSION['error'] = "Invalid password. Please try again.";
-                    
-                    header("Location: Login.php");
-                    exit();
-                    
-                }
+                }   
             }
+
+            //Wrong password
+            $_SESSION['logged_in'] = false;
+            $_SESSION['error'] = "Invalid password. Please try again.";
+            
+            header("Location: Login.php");
+            exit();
+            
         }
         else 
         {
