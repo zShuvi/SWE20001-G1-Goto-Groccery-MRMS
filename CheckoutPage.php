@@ -34,7 +34,6 @@
                 <!-- Content will be populated by JavaScript -->
             </ul>
         </div>
-        <label class="user">Aaron</label>
     </div>
     </header>
 
