@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['logged_in'] = true;
                     $_SESSION['active_user'] = $row["ID"];
                     $_SESSION['active_username'] = $row["Username"];
+		    $_SESSION['cart'] = [];
                     header("Location: Home.php");
                     exit(); // Terminate the script here after redirect
                 }   
