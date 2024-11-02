@@ -53,6 +53,78 @@ if (isset($_SESSION['logged_in']))
         return $vouchers;
     }
 
+    function redeemVoucher($conn)
+{
+    $activeuser = $_SESSION["active_user"];
+
+    //fetch user points
+    $sql = "SELECT Points FROM userstable WHERE ID = $activeuser";
+    $result = $conn->query($sql);
+    if ($result) 
+    {
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $userpoints = $row['Points'];
+        } 
+        else 
+        {
+            $_SESSION["error"] = "User's point record not found";
+            return false;
+        }
+    } 
+    else 
+    {
+        $_SESSION["error"] = "Userpoints query error";
+        return false; 
+    }
+
+    //fetch voucher point price
+    $voucherid = $_POST["voucherid"];
+    $sql = "SELECT Points FROM voucherstable WHERE ID = $voucherid";
+    $result = $conn->query($sql);
+    if ($result) 
+    {
+        $row = $result->fetch_assoc();
+        if ($row) {
+            $voucherprice = $row['Points'];
+        } 
+        else 
+        {
+            $_SESSION["error"] = "Voucher price not found";
+            return false;
+        }
+    } 
+    else 
+    {
+        $_SESSION["error"] = "Voucher price query error";
+        return false; 
+    }
+
+    //Purchase
+    if ($userpoints >= $voucherprice) 
+    {
+        $newpoints = $userpoints - $voucherprice;
+        $sql = "UPDATE userstable SET Points = ? WHERE ID = ?";
+        if ($purchase = $conn->prepare($sql))
+        {
+            $purchase->bind_param("ii", $newpoints, $activeuser); 
+            $purchase->execute();
+            $purchase->close();
+        }
+        else
+        {
+            $_SESSION['error'] = "Error purchasing.";
+        }
+        
+    } 
+    else 
+    {
+        $_SESSION["error"] = "Insufficient points for purchase";
+    }
+
+    return true;
+}
+
     // Set default voucher view (Available vouchers)
     $isClaimed = 0;
     $vouchers = fetchVouchers($conn, $isClaimed);
