@@ -1,3 +1,13 @@
+<?php
+    session_start();
+
+    // Needed this, cause if the variable is unset, it sometimes pop up long error message
+    // Which causes the entire html display to shift sometimes.
+    if (!isset($_SESSION['logged_in'])){
+        $_SESSION['logged_in'] = 0;
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
