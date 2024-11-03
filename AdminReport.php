@@ -34,7 +34,7 @@ session_start();
             <div class="image-text">
 
                 <span class="image">
-                    <img src="images/admin.png" alt="logo">
+                    <img src=<?php echo $_SESSION["profile_picture"]; ?> alt="Profile Picture" onerror="this.src='images/admin.png';">
                 </span>
 
 
