@@ -14,7 +14,7 @@ $userid = $_SESSION['active_user'];
 
 include 'Database.php';
 
-
+// Get every users information from the table with an ID
 $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
     $result = $conn->query($sql);
     if ($result->num_rows == 1)
@@ -25,6 +25,7 @@ $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
             $email = $row["Email"];
             $role = $row["Role"];
             $password = $row["Password"];
+            $profile = $row["ProfileImagePath"];
 
             if($row["Gender"] == 'M'){
                 $gender = "Male";
@@ -40,31 +41,100 @@ $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
 
 
 
+// If any form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-
+    // Get info whether the submitted form is for password or for info
     $form_type = $_POST["form_type"];
 
-    
-
-
+    // If the submitted form section is for General Info
     if ($form_type == "general_info"){
 
+        // Image 
+        if (isset($_FILES['image'])  && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+
+            $uploadDirectory = "images/ProfileImage/";
+            $fileTempPath = $_FILES['image']['tmp_name'];
+            $fileName = basename($_FILES["image"]["name"]);
+            $destinationPath = $uploadDirectory . $fileName;
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($destinationPath, PATHINFO_EXTENSION));
+
+            // Check if the file is an actual image
+            $check = getimagesize($_FILES["image"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
+            } else {
+                $error = "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            // Check file size (limit to 2MB)
+            if ($_FILES["image"]["size"] > 2 * 1024 * 1024) {
+                $error = "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+
+            // Allow only specific file formats
+            if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
+                $error = "Sorry, only JPG, JPEG, & PNG files are allowed.";
+                $uploadOk = 0;
+            }
+        
+            // Check if the directory exists, if not, create it
+            if (!is_dir($uploadDirectory)) {
+                if (!mkdir($uploadDirectory, 0777, true)) {
+                    $error = "Failed to create upload directory.";
+                }
+            }
+        
+                // Check if uploadOk is set to 1
+        if ($uploadOk == 1) {
+            // Move the file and check if it was successful
+            if (move_uploaded_file($fileTempPath, $destinationPath)) {
+        
+                // Update the database with the new image path
+                $sql = "UPDATE userstable SET ProfileImagePath = ? WHERE ID = ?";
+        
+                if ($updateImage = $conn->prepare($sql)) {
+                    $updateImage->bind_param("si", $destinationPath, $userid);
+                    if ($updateImage->execute()) {
+                        $profile = $destinationPath;
+                        $_SESSION["profile_picture"] = $profile;
+                        error_log("Image uploaded successfully to: " . $destinationPath);
+                    } else {
+                        $error = "Error updating image in the database.";
+                    }
+                    $updateImage->close();
+                } else {
+                    $error = "Failed to prepare image update statement.";
+                }
+        
+            } else {
+                $error = "Failed to upload profile image.";
+            }
+        }
+        
+        }
+
+
+
+        // Other Information
         if ($_POST['username'] != $username || $_POST['email'] != $email || $_POST['gender'] != $gender || $_POST['phone_number'] != $phone_number || $_POST['date_of_birth'] != $date_of_birth)
         {
+
             $newUsername = $_POST['username'];
             $newEmail = $_POST['email'];
             $newGender = $_POST['gender'];
             $newPhoneNumber = $_POST['phone_number'];
             $newDateOfBirth = $_POST['date_of_birth'];
 
-            // Update the session variable
-            $_SESSION['active_name'] = $newUsername;
+            
 
             $sql = "UPDATE userstable SET Email = ?, Username = ?, Gender = ?, PhoneNumber = ?, DateOfBirth = ? WHERE ID = ?";
 
 
-            if ($updateUser = $conn->prepare($sql)) //defines updatePassword
+            if ($updateUser = $conn->prepare($sql)) //defines updateuser
             {
                 $updateUser->bind_param("sssssi", $newEmail, $newUsername, $newGender, $newPhoneNumber, $newDateOfBirth, $userid);
                 /* the format of the input;     
@@ -73,6 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 $updateUser->execute();
                 $updateUser->close();
 
+
+                // Update the session variable
+                $_SESSION['active_name'] = $newUsername;
 
                 $username = $newUsername;
                 $email = $newEmail;
@@ -90,9 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             else 
             {
                 $_SESSION['error'] = "Error updating info.";
-            }
-
-            
+            } 
         }
 
 
@@ -102,7 +173,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
             $error = "Wrong Password";
             
-
         } else {
 
             if ($_POST['newpassword'] != $password)
@@ -113,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                     $sql = "UPDATE userstable SET Password = ? WHERE ID = ?"; //abstract
 
-                    if ($updatePassword = $conn->prepare($sql)) //defines updateUser
+                    if ($updatePassword = $conn->prepare($sql)) //defines updatePassword
                     {
                         $updatePassword->bind_param("si", $newPassword, $userid); 
                         /* the format of the input; 
@@ -134,16 +204,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     $error = "Password must match confirmation.";
                 }
             }
-
         }
-
-        
-
-    }
-
-
-    
-            
+    }            
 }    
     
 
@@ -177,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             <div class="image-text">
 
                 <span class="image">
-                    <img src="images/admin.png" alt="logo">
+                    <img src=<?php echo "$profile"; ?> alt="Profile Picture" onerror="this.src='images/admin.png';">
                 </span>
 
 
@@ -309,6 +371,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 unset($error);
             ?>
 
+
             <div class="card overflow-hidden">
 
                 <div class="row no-gutters row-bordered row-border-light">
@@ -331,11 +394,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
-                                    <img src="images/Profile_Placeholder.png" alt="Profile Picture"
-                                        class="d-block ui-w-80">
+                                    <img src=<?php echo "$profile"; ?> alt="Profile Picture" id="profile-image" class="d-block ui-w-80" onerror="this.src='images/admin.png';">
                 
                                 </div>
-                                <hr class="border-light m-0">
+                                <hr class="border-light m-0" >
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username: <?php echo $username ?></label>
@@ -358,23 +420,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 </div>
                             </div>
                             
+
                             <div class="tab-pane fade" id="account-info">
 
+                            <!-- FORM METHOD -->
+                            <form method="POST" action="#" enctype="multipart/form-data" class="form">
+                                <!-- Hidden input show we know it's for general infor form -->
+                                <input type="hidden" name="form_type" value="general_info">
+
+
                                     <div class="card-body media align-items-center">
-                                        <img src="images/Profile_Placeholder.png" alt="Profile Picture"
-                                            class="d-block ui-w-80">
+                                        <img src= <?php echo "$profile"; ?> alt="Profile Picture" id="profile-image" class="d-block ui-w-80" onerror="this.src='images/admin.png';">
                                         <div class="media-body ml-4">
                                             <label class="btn btn-outline-primary">
                                                 Upload new photo
-                                                <input type="file" class="account-settings-fileinput">
+                                            <input type="file" name="image"  class="account-settings-fileinput">
                                             </label>
+                                            <br>
+                                            <label class="form-label">*Only JPEG, JPG, and PNG [2MB Max]*</label>
                                         </div>
                                     </div>
 
                                 <div class="card-body pb-2">
-                                    
-                                <form method="POST" action="#account-info" class="form">
-                                    <input type="hidden" name="form_type" value="general_info">
+                                
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
                                         <input type="text" class="form-control mb-1" name="username" value="<?php echo $username; ?>">
@@ -393,7 +461,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                                     <div class="form-group">
                                         <label class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control mb-1" name="date_of_birth" value=<?php echo $date_of_birth ?>>
+                                        <input type="date" class="form-control mb-1" id="date_input" name="date_of_birth" value=<?php echo $date_of_birth ?>>
                                     </div>
                                 </div>
 
@@ -414,7 +482,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                     
                                 </div>
                                 <div class="text-right mt-3">
-                                <button type="submit" class="btn">Save changes</button>&nbsp;
+                                <button type="submit" name="submit" class="btn">Save changes</button>&nbsp;
                                 <button type="reset" class="btn">Cancel</button>
                                 </div>
 
@@ -430,15 +498,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 <input type="hidden" name="form_type" value="password_update">
                                     <div class="form-group">
                                         <label class="form-label">Current password</label>
-                                        <input type="password" name="currentpassword" class="form-control">
+                                        <input type="password" name="currentpassword" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">New password</label>
-                                        <input type="password" name="newpassword" class="form-control">
+                                        <input type="password" id="psw" name="newpassword" pattern="^.{8,}$" 
+                                        title="Must contain at least 8 or more characters" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Repeat new password</label>
-                                        <input type="password" name="newpasswordConfirm" class="form-control">
+                                        <input type="password" name="newpasswordConfirm" class="form-control" required>
+                                    </div>
+
+                                    <div id="message">
+                                    <h3>Password must contain the following:</h3>
+                                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
                                     </div>
                                 
                                 </div>
@@ -459,11 +533,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </div>
             
         </div>
-        <div class="container">
-            
-
-
-        </div>
+        
         
     </section>
 
@@ -476,6 +546,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>
+    <script src="scripts/password_date_check.js"></script>
 </body>
 
 
