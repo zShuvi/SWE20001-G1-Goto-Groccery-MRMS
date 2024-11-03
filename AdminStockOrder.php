@@ -35,7 +35,7 @@ session_start();
             <div class="image-text">
 
                 <span class="image">
-                    <img src="images/admin.png" alt="logo">
+                    <img src=<?php echo $_SESSION["profile_picture"]; ?> alt="Profile Picture" onerror="this.src='images/admin.png';">
                 </span>
 
 
@@ -151,8 +151,6 @@ session_start();
     <!-- Home, outside of Navigation Side Bar -->
 
     <section class="home">
-        <div class="text">Stock Ordering</div>
-
         <div class="container_order">
             <div class="form-header">
                 <h1>Order Stock</h1>
@@ -165,7 +163,51 @@ session_start();
             </div>
     
             <!-- Search Results as product cards -->
-            <div id="search-results" class="product-container"></div>
+            <div id="search-results" class="product-container">
+
+            <?php 
+                include 'Database.php'; // include the database connection
+                $sql = "SELECT * FROM ProductTable"; // get all products
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        echo '
+                        <div class="product-card">
+                            <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '" onerror="this.onerror=null; this.src=\'images/Placeholder.png\';">
+
+                            <div class="product-info">
+                                <h3> '. $row["Name"] .' </h3>
+                                <p><strong> Description: </strong>' . $row["Description"] . ' </p>
+                                <p><strong> Category: </strong>' . $row["Category"] . ' </p>
+                                <p><strong> Quantity: </strong>' . $row["Quantity"] . ' </p>
+                            </div>
+
+                            
+                            <form method="POST" action="">
+
+                            
+                            <div class="quantity-control">
+                                <input type="hidden" name="productID" value="' . $row["ProductID"] . '">
+                                <input type="number" class="quantity_" id="quantity_' . $row["ProductID"] . '" name="quantity" value="' . $row["Quantity"] . '" min="0">
+                            </div>
+
+                            
+
+                            <button type="submit" class="submit-btn">Update Quantity</button>
+
+                            </form>
+
+                        </div>';
+                    }
+                } else {
+                    echo "No products found!";
+                }
+                $conn->close(); // close the database connection
+            ?>
+
+            </div>
     
             <!-- Proceed Button to view order summary -->
             <button id="proceed-btn" class="submit-btn"  onclick="proceedToSummary()">Proceed to Confirmation</button>
