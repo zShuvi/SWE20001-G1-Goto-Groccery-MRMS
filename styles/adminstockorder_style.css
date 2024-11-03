@@ -10,7 +10,7 @@
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
     --text-color: #707070;
-    --button-color: #74ebd5;
+    --button-color: #5a96ea;
     --box-shadow-color: rgba(0, 0, 0, 0.1);
     --product-card-color: #d9e4ffab;
 
@@ -35,7 +35,7 @@ body.dark
     --primary-color-light: #3A3B3C;
     --toggle-color: #FFF;
     --text-color: #CCC;
-    --button-color: #1a4f45;
+    --button-color: #343f63;
     --box-shadow-color: rgba(255, 255, 255, 0.2);
     --product-card-color: #a8a8a8ab;
 }
@@ -143,7 +143,9 @@ body
 .sidebar .image-text img
 {
     width: 40px;
+    height: 40px;
     border-radius: 6px;
+    object-fit: cover !important; /* Ensures the image covers the element's box */
 }
 
 .sidebar header .image-text
@@ -438,7 +440,8 @@ body.dark button:hover
     width: 95%;
     max-width: 95%;
     text-align: center;
-    height: 90%;
+    height: 95%;
+    margin-top: 25px;
     transition: var(--trans-05);
 }
 
@@ -453,6 +456,7 @@ body.dark button:hover
     border: 1px solid var(--body-color);
     margin-bottom: 20px;
     transition: var(--trans-05);
+    margin-top: 20px;
 }
 
 #search:focus{
@@ -464,7 +468,7 @@ body.dark button:hover
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 350px; /* Adjust this based on the size of your product cards */
+    height: 400px; /* Adjust this based on the size of your product cards */
     overflow-y: auto; /* Enables scrolling when content overflows */
     padding-right: 10px; /* Adds space for scrollbar */
 }
@@ -488,13 +492,21 @@ body.dark button:hover
     border: 1px solid #ddd;
     border-radius: 12px;
     box-shadow: 0 2px 8px var(--box-shadow-color);
+    background-color: var(--product-card-color);
+    border-color: var(--body-color);
+    transition: var(--trans-05);
 }
 
 .product-card img {
-    width: 70px;
-    height: 70px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     margin-right: 15px;
+    border-radius: 10%;
+    object-fit: cover;
+    border: 2px solid var(--text-color); /* Adds a border around the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for a 3D effect */
+    transition: var(--trans-05);
 }
 
 .product-info {
@@ -518,18 +530,23 @@ body.dark button:hover
 }
 
 /* Input and Button styling for quantity */
-.quantity-input {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
+.quantity_ {
+
+    width: 80px; /* Adjust the width to fit the design */
+    height: 40px;
+    padding: 8px; /* Add some padding for better spacing */
+    font-size: 16px; /* Adjust the font size */
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    color: #333; /* Text color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: border-color 0.3s ease; /* Smooth transition on focus */
 }
 
-.quantity-input input {
-    width: 50px;
-    padding: 5px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+.quantity_:focus {
+    border-color: #007bff; /* Border color change on focus */
+    outline: none; /* Remove default outline */
 }
 
 .submit-btn {
@@ -546,11 +563,15 @@ body.dark button:hover
 
 
 .submit-btn:hover {
-    background: #66d3c2;
+    background: #9dd3ff;
+}
+
+body.dark .submit-btn:hover{
+    background: #1a252e;
 }
 
 #proceed-btn {
-    margin-top: 50px;
+    margin-top: 25px;
     margin-right: 20px;
     float: right; /* Aligns the button to the right inside the container */
     display: block; /* Always visible */
