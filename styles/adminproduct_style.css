@@ -142,7 +142,9 @@ body
 .sidebar .image-text img
 {
     width: 40px;
+    height: 40px;
     border-radius: 6px;
+    object-fit: cover !important; /* Ensures the image covers the element's box */
 }
 
 .sidebar header .image-text
@@ -437,7 +439,7 @@ body.dark button:hover
     width: 95%;
     max-width: 95%;
     text-align: center;
-    height: 90%;
+    height: 95%;
     transition: var(--trans-05);
     margin-top: 25px;
 }
@@ -501,6 +503,11 @@ body.dark button:hover
     height: 110px;
     object-fit: cover;
     margin-right: 15px;
+    border-radius: 10%;
+    object-fit: cover;
+    border: 2px solid var(--text-color); /* Adds a border around the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for a 3D effect */
+    transition: var(--trans-05);
 }
 
 .product-info {
