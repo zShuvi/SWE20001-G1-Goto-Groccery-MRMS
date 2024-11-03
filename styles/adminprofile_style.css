@@ -152,8 +152,32 @@ body.dark
 .sidebar .image-text img
 {
     width: 40px;
+    height: 40px;
     border-radius: 6px;
+    object-fit: cover !important; /* Ensures the image covers the element's box */
 }
+
+#profile-image {
+    width: 100px !important; 
+    height: 100px !important;
+    border-radius: 10% !important; /* Makes the image circular */
+    object-fit: cover !important; /* Ensures the image covers the element's box */
+    border: 2px solid var(--text-color) !important; /* Adds a border around the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Adds a shadow for a 3D effect */
+    transition: var(--trans-05);
+}
+
+
+
+hr {
+    border: none; /* Remove default border */
+    height: 0.5px; /* Set the thickness */
+    background-color: var(--text-color); /* Set the color */
+    transition: var(--trans-05);
+}
+
+
+
 
 .sidebar header .image-text
 {
@@ -399,6 +423,7 @@ body.dark .switch::before
     height: auto;
 }
 
+
 button{
     margin: 50px 10px;
     cursor: pointer;
@@ -476,3 +501,43 @@ html:not(.dark-style) .account-settings-links .list-group-item {
     border-color: rgba(24, 28, 33, 0.03) !important;
 }
 
+
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+
+    background: var(--body-color);
+    color: var(--text-color);
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+    transition: var(--trans-05);
+    border-radius: 10px;
+  }
+  
+  #message p {
+    padding: 10px 35px;
+    font-size: 18px;
+  }
+  
+  /* Add a green text color and a checkmark when the requirements are right */
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+    content: "✔";
+  }
+  
+  /* Add a red text color and an "x" icon when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+    content: "✖";
+  }
