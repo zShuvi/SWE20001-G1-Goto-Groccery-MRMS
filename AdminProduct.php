@@ -78,7 +78,7 @@ if (isset($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);
     
     // SQL query to search products
-    $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' ORDER BY Name ASC";
+    $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' OR Category LIKE '%$search%' ORDER BY Name ASC";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
@@ -152,7 +152,7 @@ if (isset($_GET['search'])) {
             <div class="image-text">
 
                 <span class="image">
-                    <img src="images/admin.png" alt="logo">
+                    <img src=<?php echo $_SESSION["profile_picture"]; ?> alt="Profile Picture" onerror="this.src='images/admin.png';">
                 </span>
 
 
@@ -297,7 +297,7 @@ if (isset($_GET['search'])) {
 
                 if ($result->num_rows > 0) {
                     // output data of each row
-                    while($row = $result->fetch_assoc()) { //Image not working//
+                    while($row = $result->fetch_assoc()) {
                         echo '
                         <div class="product-card">
                             <img src="' . $row["Image"] . '" alt="' . $row["Name"] . '" onerror="this.onerror=null; this.src=\'images/Placeholder.png\';">
