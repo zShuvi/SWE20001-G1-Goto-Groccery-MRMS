@@ -19,7 +19,6 @@
     outline: none;
     border: none;
     text-decoration: none;
-    text-transform: capitalize;
 }
 
 html
@@ -48,7 +47,8 @@ body
     padding: 20px 6%;
     background: #fff;
     box-shadow: var(--box-shadow);
-    z-index: 1;
+    z-index: 5;
+    text-transform: capitalize;
 }
 
 .header .logo
@@ -158,37 +158,33 @@ button{
 }
 
 .text-right .btn{
-    background-color: var(--body-color);
-    color: var(--text-color);
-    transition: var(--trans-05);
+    background-color: #E4E9F7;
+    color: #707070;
+
 }
 
 .text-right .btn:hover{
-    background-color: var(--primary-color);
-    color: var(--primary-color-light);
+    background-color: #695CFE;
+    color: #F6F5FF;
 }
 
-body.dark .text-right .btn:hover{
-    color: inherit;
-}
 
 .form-control, .custom-select{
-    background-color: var(--sidebar-color);
-    border-color: var(--text-color);
-    color: var(--text-color);
-    transition: var(--trans-05);
+    background-color: #FFF;
+    border-color: #707070;
+    color: #707070;
+
 }
 
 
 .card {
     background-clip: padding-box;
-    background-color: var(--sidebar-color);
-    color: var(--text-color);
+    background-color: #FFF;
+    color: #707070;
     border-radius: 20px;
-    border-width: 8px;
-    border-color: var(--sidebar-color);
+    border-width: 5px;
+    border-color: #707070;
     box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
-    transition: var(--trans-05);
 }
 
 
@@ -210,18 +206,17 @@ body.dark .text-right .btn:hover{
 }
 
 html:not(.dark-style) .account-settings-links .list-group-item.active {
-    background: var(--body-color);
+    background: #efedff;
 }
 
 html:not(.dark-style) .account-settings-links .list-group-item {
-    background: var(--sidebar-color);
-    color: var(--text-color);
-    transition: var(--trans-05);
+    background: #FFF;
+    color: #707070;
 }
 
 
 .light-style .account-settings-links .list-group-item.active {
-    color: var(--text-color) !important;
+    color: #707070 !important;
 }
 
 .light-style .account-settings-links .list-group-item {
@@ -381,3 +376,22 @@ footer .footer-links {
 .ribbon-header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
+
+#profile-image {
+    width: 100px !important; 
+    height: 100px !important;
+    border-radius: 10% !important; /* Makes the image circular */
+    object-fit: cover !important; /* Ensures the image covers the element's box */
+    border: 2px solid grey !important; /* Adds a border around the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Adds a shadow for a 3D effect */
+    transition: var(--trans-05);
+}
+
+hr {
+    border: none; /* Remove default border */
+    height: 0.5px; /* Set the thickness */
+    width: 95%;
+    background-color: black; /* Set the color */
+}
+
