@@ -4,126 +4,107 @@ require_once 'Database.php';
 
 // Initialize variables with fallback values
 $username = "Unknown";
-$phone = "Not provided"; 
+$phonenumber = "Not provided"; 
 $dob = "Not provided";    
+$points = 0; // Initialize points to 0
 $vouchers = []; // Initialize vouchers to an empty array
 
 // Check if the user is logged in and has a valid session ID
-if (isset($_SESSION['logged_in']))
-{
+if (isset($_SESSION['logged_in'])) {
     $userid = $_SESSION['active_user'];
 
-    $query = "SELECT Username, PhoneNumber, DateOfBirth FROM UsersTable WHERE ID = ?";
+    // Retrieve user details including points
+    $query = "SELECT Username, PhoneNumber, DateOfBirth, Points FROM UsersTable WHERE ID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $userid);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $sql = "SELECT * FROM userstable WHERE ID = '"."$userid"."'";
-    $result = $conn->query($sql);
-    if ($result->num_rows == 1)
-    {
-        while($row = $result->fetch_assoc())
-        {
-            $username = $row["Username"];
-            $phonenumber = $row["PhoneNumber"];
-            $dob = $row["DateOfBirth"];
-        }
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $username = $row["Username"];
+        $phonenumber = $row["PhoneNumber"];
+        $dob = $row["DateOfBirth"];
+        $points = $row["Points"]; // Fetch user points
     }
-        // Retrieve vouchers from database
+    $stmt->close();
+
+    // Retrieve vouchers from the database
     function fetchVouchers($conn, $isClaimed) {
-        $query = "SELECT VoucherName, DiscountPercentage, ExpiryDate FROM VouchersTable WHERE IsClaimed = ?";
+        $query = "SELECT VoucherID, VoucherName, DiscountPercentage, ExpiryDate, ReqPoints FROM VouchersTable WHERE IsClaimed = ?";
         $stmt = $conn->prepare($query);
-            
+        
         if ($stmt === false) {
             die("SQL prepare error: " . $conn->error);
         }
-    
+
         $stmt->bind_param("i", $isClaimed);
-            
+        
         if (!$stmt->execute()) {
             die("Query execution failed: " . $stmt->error);
         }
-    
+
         $result = $stmt->get_result();
         $vouchers = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
-    
-        // Check if any vouchers were retrieved
-        if (empty($vouchers)) {
-            echo "No vouchers available.";
-        }
-    
+
         return $vouchers;
     }
 
-    function redeemVoucher($conn)
-{
-    $activeuser = $_SESSION["active_user"];
+    // Function to redeem a voucher
+    function redeemVoucher($conn) {
+        $activeuser = $_SESSION["active_user"];
+        $voucherid = $_POST["voucherid"];
 
-    //fetch user points
-    $sql = "SELECT Points FROM userstable WHERE ID = $activeuser";
-    $result = $conn->query($sql);
-    if ($result) 
-    {
-        $row = $result->fetch_assoc();
-        if ($row) {
-            $userpoints = $row['Points'];
-        } 
-        else 
-        {
-            $_SESSION["error"] = "User's point record not found";
+        // Fetch user points
+        $sql = "SELECT Points FROM UsersTable WHERE ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $activeuser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $userpoints = $result->fetch_assoc()['Points'];
+        $stmt->close();
+
+        // Fetch voucher point cost
+        $sql = "SELECT ReqPoints FROM VouchersTable WHERE VoucherID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $voucherid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $voucherprice = $result->fetch_assoc()['ReqPoints'];
+        $stmt->close();
+
+        // Check if user has enough points
+        if ($userpoints >= $voucherprice) {
+            $newpoints = $userpoints - $voucherprice;
+
+            // Update user points
+            $sql = "UPDATE UsersTable SET Points = ? WHERE ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $newpoints, $activeuser);
+            if (!$stmt->execute()) {
+                $_SESSION['error'] = "Error updating points.";
+                return false;
+            }
+            $stmt->close();
+
+            // Insert into VoucherOwn table to record voucher claim
+            $sql = "INSERT INTO VoucherOwn (User_ID, Voucher_ID) VALUES (?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $activeuser, $voucherid);
+            if (!$stmt->execute()) {
+                $_SESSION['error'] = "Error claiming voucher.";
+                return false;
+            }
+            $stmt->close();
+
+            $_SESSION['success'] = "Voucher claimed successfully!";
+            return true;
+        } else {
+            $_SESSION["error"] = "Insufficient points to claim this voucher.";
             return false;
         }
-    } 
-    else 
-    {
-        $_SESSION["error"] = "Userpoints query error";
-        return false; 
     }
-
-    //fetch voucher point price
-    $voucherid = $_POST["voucherid"];
-    $sql = "SELECT Points FROM voucherstable WHERE ID = $voucherid";
-    $result = $conn->query($sql);
-    if ($result) 
-    {
-        $row = $result->fetch_assoc();
-        if ($row) {
-            $voucherprice = $row['Points'];
-        } 
-        else 
-        {
-            $_SESSION["error"] = "Voucher price not found";
-            return false;
-        }
-    } 
-    else 
-    {
-        $_SESSION["error"] = "Voucher price query error";
-        return false; 
-    }
-
-    //Purchase
-    if ($userpoints >= $voucherprice) 
-    {
-        $newpoints = $userpoints - $voucherprice;
-        $sql = "UPDATE userstable SET Points = ? WHERE ID = ?";
-        if ($purchase = $conn->prepare($sql))
-        {
-            $purchase->bind_param("ii", $newpoints, $activeuser); 
-            $purchase->execute();
-            $purchase->close();
-        }
-        else
-        {
-            $_SESSION['error'] = "Error purchasing.";
-        }
-        
-    } 
-    else 
-    {
-        $_SESSION["error"] = "Insufficient points for purchase";
-    }
-
-    return true;
-}
 
     // Set default voucher view (Available vouchers)
     $isClaimed = 0;
@@ -143,24 +124,6 @@ $conn->close();
     <title> Goto Grocery Admin Home Page </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="styles/Membership_style.css" rel="stylesheet">
-    <style>
-
-       
-        .membership-table th, .membership-table td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        .membership-table th {
-            background-color: #4CAF50; /* Green header */
-            color: white;
-        }
-
-        h1 {
-            margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -169,7 +132,7 @@ $conn->close();
 <header class="header">
     <a href="#" class="logo"> <i class="fa fa-shopping-basket"></i> Goto Grocery </a>
     <nav class="navbar">
-        <a href="#home">home</a>
+        <a href="home.php">home</a>
         <a href="Home.php#features">features</a>
         <a href="Product.php">products</a>
         <a href="Home.php#reviews">reviews</a>
@@ -186,51 +149,81 @@ $conn->close();
     </div>
 </header>
 
-<main>
-    <!--Fucked Area -->
-    <h1>Membership Details</h1>
-        <table class="membership-table">
-            <tr>
-                <th>Username:</th>
-                <td><?php echo $username; ?></td>
-            </tr>
-            <tr>
-                <th>Phone Number:</th>
-                <td><?php echo $phone; ?></td> 
-            </tr>
-            <tr>
-                <th>Date of Birth:</th>
-                <td><?php echo $dob; ?></td> 
-            </tr>
-        </table>
+<main> 
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="success-message"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+    <?php elseif (isset($_SESSION['error'])): ?>
+        <div class="error-message"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+    <?php endif; ?>
 
-     <!--Vouchers -->
-     <h2>Vouchers</h2>
+    <!-- Membership Details Section -->
+    <h1 class="center-text">Filler</h1> <!-- For some reason this doesn't show, too lazy to fix this so just leave it here -->
+    <h1 class="center-text">Membership Details</h1> 
+    <table class="membership-table">
+        <tr>
+            <th>Username:</th>
+            <td><?php echo htmlspecialchars($username); ?></td>
+        </tr>
+        <tr>
+            <th>Phone Number:</th>
+            <td><?php echo htmlspecialchars($phonenumber); ?></td>
+        </tr>
+        <tr>
+            <th>Date of Birth:</th>
+            <td><?php echo htmlspecialchars($dob); ?></td>
+        </tr>
+        <tr>
+            <th>Points:</th>
+            <td><?php echo htmlspecialchars($points); ?></td>
+        </tr>
+    </table>
+
+    <h1 class="center-text">Available Vouchers</h1>
     <table class="voucher-table">
         <thead>
             <tr>
                 <th>Voucher Name</th>
                 <th>Discount (%)</th>
                 <th>Expiry Date</th>
+                <th>Point Cost</th>
+                <th>Action</th> <!-- Claim button -->
             </tr>
         </thead>
         <tbody id="voucherTableBody">
-            <?php if (count($vouchers) > 0): ?>
+            <?php if (!empty($vouchers)): ?>
                 <?php foreach ($vouchers as $voucher): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($voucher['VoucherName']); ?></td>
                         <td><?php echo htmlspecialchars($voucher['DiscountPercentage']); ?></td>
                         <td><?php echo htmlspecialchars($voucher['ExpiryDate']); ?></td>
+                        <td><?php echo htmlspecialchars($voucher['ReqPoints']); ?></td>
+                        <td>
+                            <?php if (!isset($isOwned) || !$isOwned): ?>
+                                <button type="button" class="claim-button" onclick="showPopup(<?php echo htmlspecialchars($voucher['VoucherID']); ?>, '<?php echo htmlspecialchars($voucher['VoucherName']); ?>')">Claim</button>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="3">No vouchers available.</td>
+                    <td colspan="5">No vouchers available.</td>
                 </tr>
             <?php endif; ?>
-        </tbody>
+        </tbody> 
     </table>
 </main>
+
+<!-- Dark overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Claim Success Popup -->
+<div id="claimPopup" class="popup">
+    <span id="closePopup" class="close-popup">&times;</span>
+    <h2>Claim Your Voucher</h2>
+    <p id="voucherClaimMessage">You’re about to claim the voucher: "<span id="voucherName"></span>"!</p> <!-- Placeholder for voucher name -->
+    <button id="confirmClaimButton" class="claim-button">Confirm Claim</button>
+    <button id="cancelButton" class="cancel-button">Cancel</button> <!-- New Cancel Button -->
+</div>
 
 <!-- Footer -->
 <footer>
@@ -268,6 +261,6 @@ $conn->close();
 
 <script src="scripts/slider.js"></script>
 <script src="scripts/dropdown.js"></script>
-<scripts src="scripts/MembershipScripts"> </scripts>
+<script src="scripts/MembershipScripts.js"></script>
 </body>
 </html>
