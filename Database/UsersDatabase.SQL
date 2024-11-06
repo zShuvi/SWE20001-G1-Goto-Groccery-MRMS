@@ -9,12 +9,17 @@ CREATE TABLE UsersTable (
     Email VARCHAR(255) NOT NULL, 
     Password VARCHAR(255) NOT NULL, 
     PhoneNumber  VARCHAR(50) NOT NULL, 
-    DateOfBirth DATE NOT NULL
+    DateOfBirth DATE NOT NULL,
+    Points INT  
 );
 
-INSERT INTO UsersTable (Role, Username, Gender , Email, Password , PhoneNumber ,DateOfBirth)
+INSERT INTO UsersTable (Role, Username,Gender ,Email ,Password ,PhoneNumber ,DateOfBirth, Points, Voucher)
 VALUES 
-('Member', 'Steve Jobs','M' , 'SteveJobs@gmail.com', 'NoAndroidOnlyApple','011-111-1111' ,  '1995-02-24'),
-('Staff', 'StaffTest1', 'M' , 'StaffTest@gmail.com', 'Password1', '011-794-1874','2003-02-24'),
-('JuniorAdmin', 'JuniorAdminTest', 'M' , 'JuniorAdmin@gmail.com', 'Password123', '016-999-1994',  '2000-02-24'),
-('SeniorAdmin', 'SeniorAdminTest', 'M' , 'SeniorAdminTest@gmail.com', '321password123','012-144-3214', '2000-02-24');
+('Member', 'Steve Jobs','M' , 'SteveJobs@gmail.com', 'NoAndroidOnlyApple','011-111-1111' ,  '1995-02-24', '1000'),
+('Staff', 'StaffTest1', 'M' , 'StaffTest@gmail.com', 'Password1', '011-794-1874','2003-02-24', '1000'),
+('JuniorAdmin', 'JuniorAdminTest', 'M' , 'JuniorAdmin@gmail.com', 'Password123', '016-999-1994',  '2000-02-24', '1000'),
+('SeniorAdmin', 'SeniorAdminTest', 'M' , 'SeniorAdminTest@gmail.com', '321password123','012-144-3214', '2000-02-24', '1000');
+
+UPDATE UsersTable 
+SET Points = 6000 
+WHERE Username = 'SeniorAdminTest';
