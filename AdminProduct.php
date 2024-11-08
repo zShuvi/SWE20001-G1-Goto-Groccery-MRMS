@@ -78,7 +78,7 @@ if (isset($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);
     
     // SQL query to search products
-    $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' OR Category LIKE '%$search%' ORDER BY Name ASC";
+    $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' OR Category LIKE '%$search%' OR ProductID LIKE '%$search%'  ORDER BY Name ASC";
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {

@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (isUserLoggedIn()) {
         dropdownList.innerHTML = `
             <li><a href="UserProfile.php">View Profile</a></li>
-            <li><a href="Member.php">Member</a></li>
+            <li><a href="Membership.php">Member</a></li>
+            <li><a href="ClaimedVoucher.php">Voucher</a></li>
             <li><a href="Login.php?logout=true" onclick="logoutUser()">Logout</a></li>
         `;
     } else {

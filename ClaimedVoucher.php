@@ -5,7 +5,7 @@ require_once 'Database.php';
 $userID = $_SESSION['active_user'] ?? 0; // Get the active user ID
 
 // Retrieve claimed vouchers for the user
-$sql = "SELECT v.VoucherName, v.DiscountPercentage, v.ExpiryDate, vo.VoucherCode 
+$sql = "SELECT v.VoucherName, v.DiscountPercentage, v.ExpiryDate, vo.VoucherCode, vo.Used
         FROM VoucherOwn vo 
         JOIN VouchersTable v ON vo.Voucher_ID = v.VoucherID 
         WHERE vo.User_ID = ?";
@@ -49,7 +49,7 @@ $conn->close();
 
     <div class="icons">
         <div class="fa fa-bars" id="menu-btn"></div>
-        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">
                 <!-- Content will be populated by JavaScript -->
@@ -57,9 +57,10 @@ $conn->close();
         </div>
     </div>
 </header>
-<h1 class="center-text">Filler</h1> <!-- For some reason this doesn't show, too lazy to fix this so just leave it here -->
+
+    <h1 class="center-text">Filler</h1> <!-- For some reason this doesn't show, too lazy to fix this so just leave it here -->
     <h1 class="center-text">Claimed Vouchers</h1>
-    <main>
+    <main style="min-height: 80vh;">
         <table class="voucher-table">
             <thead>
                 <tr>
@@ -67,6 +68,7 @@ $conn->close();
                     <th>Discount (%)</th>
                     <th>Expiry Date</th>
                     <th>Voucher Code</th>
+                    <th>Used</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,6 +79,7 @@ $conn->close();
                         <td><?php echo htmlspecialchars($voucher['DiscountPercentage']); ?></td>
                         <td><?php echo htmlspecialchars($voucher['ExpiryDate']); ?></td>
                         <td><?php echo htmlspecialchars($voucher['VoucherCode']); ?></td>
+                        <td><?php echo htmlspecialchars($voucher['Used']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

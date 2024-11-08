@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['active_username'] = $row["Username"];
                         $_SESSION['active_role'] = $row["Role"];
                         $_SESSION['profile_picture'] = $row["ProfileImagePath"];
+                        $_SESSION['Admin_Cart'] = [];
                         header("Location: AdminHome.php");
                         exit(); // Terminate the script here after redirect
                     }

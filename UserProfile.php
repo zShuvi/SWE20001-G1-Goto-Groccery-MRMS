@@ -230,16 +230,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <input style="display: none" type="hidden" name="sessionLoggedIn" id="sessionLoggedIn" value="<?php echo $_SESSION['logged_in'] ?>">
 
     <nav class="navbar">
-        <a href="Home.php">home</a>
-        <a href="#features">features</a>
-        <a href="#products">products</a>
-        <a href="#categories">categories</a>
-        <a href="#reviews">reviews</a>
+            <a href="Home.php">Home</a>
+            <a href="Home.php#features">Features</a>
+            <a href="Product.php">Products</a>
+            <a href="Home.php#reviews">Reviews</a>
     </nav>
 
     <div class="icons">
         <div class="fa fa-bars" id="menu-btn"></div>
-        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">
                 <!-- Content will be populated by JavaScript -->

@@ -34,7 +34,7 @@
 
         <div class="icons">
             <div class="fa fa-bars" id="menu-btn"></div>
-            <div class="fa fa-shopping-cart" id="cart-btn"></div>
+            <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
             <div class="fa fa-user" id="user-btn">
                 <ul id="dropdownList" class="dropdown-content">
                     <!-- Content will be populated by JavaScript -->

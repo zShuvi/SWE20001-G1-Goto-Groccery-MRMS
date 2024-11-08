@@ -40,7 +40,7 @@
 
     <div class="icons">
         <div class="fa fa-bars" id="menu-btn"></div>
-        <div class="fa fa-shopping-cart" id="cart-btn"></div>
+        <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">
                 <!-- Content will be populated by JavaScript -->
@@ -112,7 +112,7 @@
             </div>
             <div class="category">
                 <a href="ShopByCategoryPage.php?category=Dairy">
-                    <img src="https://via.placeholder.com/150" alt="Dairy & Eggs">
+                    <img src="images/ProductImage/Kenkori_Eggs.png" alt="Dairy & Eggs">
                     <h3>Dairy & Eggs</h3>
                 </a>
             </div>

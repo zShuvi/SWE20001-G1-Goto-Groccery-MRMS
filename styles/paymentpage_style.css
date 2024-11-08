@@ -106,4 +106,66 @@ img
 }
 
 
+
+
+.hidden {
+    display: none;
+  }
+  
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    padding: 20px;
+    background: white;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.362);
+    box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s ease-in-out;
+    font-family: Arial, sans-serif;
+  }
+  
+  .checkmark-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .checkmark {
+    position: absolute;
+    left: 28%;
+    top: 8%;
+    width: 35px;
+    height: 65px;
+    transform: rotate(45deg);
+    border-right: 5px solid white;
+    border-bottom: 5px solid white;
+    animation: fadeIn 3s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+
+  
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  
   

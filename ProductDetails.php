@@ -6,6 +6,22 @@
     if (!isset($_SESSION['logged_in'])){
         $_SESSION['logged_in'] = 0;
     }
+
+    include 'functions/Cart.php';
+
+    // Handle form submission for adding to cart
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
+        $productID = (int)$_POST['productID'];
+        $quantity = (int)$_POST['quantity'];
+
+        // Call the addToCart function to add the product to the session cart
+        addToCart($productID, $quantity);
+
+        // Redirect to avoid re-submitting on page refresh
+        header("Location: ProductDetails.php?id=$productID&cart=added");
+        exit();
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +48,13 @@
 
         <div class="icons">
             <div class="fa fa-bars" id="menu-btn"></div>
-            <div class="fa fa-shopping-cart" id="cart-btn"></div>
+            <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
             <div class="fa fa-user" id="user-btn">
                 <ul id="dropdownList" class="dropdown-content">
                     <!-- Content will be populated by JavaScript -->
                 </ul>
             </div>
         </div>
-        <!-- <label><?php echo $_SESSION["active_username"]?></label> --> <!-- display name in navbar -->
     </header>
 
     <div class="container">
@@ -60,7 +75,24 @@
                         <h2>' . $row["Name"] . '</h2>
                         <p class="price">RM' . $row["Price"] . '</p>
                         <p class="description">' . $row["Description"] . '</p>
-                    </div>';
+                        <p class="description"> Available Quantity: ' . $row["Quantity"] . '<p>
+                    </div>
+                       <div class="quantity-container">
+                            <form action="#" method="POST">
+                            <div class="quantity-controls">
+                                <button type="button" class="decrement" onclick="decreaseQuantity()">-</button>
+                                <input type="number" name="quantity" class="quantity" value="1" min="1" max="'. $row["Quantity"] .'">
+                                <button type="button" class="increment" onclick="increaseQuantity()">+</button>
+                            </div>
+                            
+                                <input type="hidden" name="productID" value="'. $row["ProductID"] .'"> <!-- Product ID from PHP -->
+                                <button type="submit" name="action" value="add" class="add-to-cart">Add to Cart</button>
+                            </form>
+                        </div>
+                        
+                        
+
+                    ';
                 }
             } else {
                 echo "Product not found!";
@@ -138,5 +170,6 @@
         </div>
     </footer>
     <script src="scripts/dropdown.js"></script>
+    <script src="scripts/quantity_changer.js"></script>
 </body>
 </html>

@@ -142,6 +142,8 @@ header h1 {
     max-width: 18%;
     text-align: center;
     transition: transform 0.3s;
+    margin-top: 20px;
+    height: 400px;
 }
 
 .product:hover {
@@ -149,7 +151,7 @@ header h1 {
 }
 
 .product img {
-    max-width: 200px;
+    width: 200px;
     height: 200px; /* Fixed height for images */
     object-fit: contain; 
     margin-bottom: 10px;
@@ -166,6 +168,7 @@ header h1 {
 
 .product .price {
     color: var(--blue);
+    margin-top: 30px;
     font-size: 18px;
 }
 

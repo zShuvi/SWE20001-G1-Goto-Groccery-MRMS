@@ -209,6 +209,9 @@ body
 }
 
 .category img, .product img {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
     max-width: 100px;
     margin-bottom: 10px;
 }

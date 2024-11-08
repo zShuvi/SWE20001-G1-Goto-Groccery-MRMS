@@ -465,7 +465,7 @@ footer .footer-links {
       border: 1px solid #eeeeee;
       height: 40px;
       font-size: 14px;
-      color: #cccccc;
+      color: black;
       font-family: "Roboto", sans-serif;
       font-weight: normal;
       margin-right: -3px;
@@ -496,7 +496,7 @@ footer .footer-links {
       line-height: 38px;
       text-transform: uppercase;
       padding: 0px 38px;
-      margin-right: -3px;
+      margin-right: -10px;
       border-radius: 0; }
     .cart_inner .table tbody tr.bottom_button td .cupon_text .gray_btn {
       padding: 0px 40px; }
@@ -572,7 +572,7 @@ footer .footer-links {
       padding: 0px 15px;
       margin-bottom: 20px; }
   .cart_inner .table tbody tr.out_button_area .checkout_btn_inner {
-    margin-left: -397px; }
+    margin-left: -350px; }
     .cart_inner .table tbody tr.out_button_area .checkout_btn_inner .primary-btn {
       height: 40px;
       padding: 0px 30px;
@@ -583,6 +583,7 @@ footer .footer-links {
         left: 240px; }
   
   .gray_btn {
+    width: 230px;
     line-height: 38px;
     background: #e8f0f2;
     border: 1px solid #eeeeee;
@@ -741,5 +742,13 @@ footer .footer-links {
         .quantity-selector button:disabled {
             color: #aaa;
             cursor: not-allowed;
+        }
+
+        .voucher_msg{
+          width: 555px;
+          transform: translateY(-30px);
+          font-weight: bold;
+          font-size: 15px;
+          color: green !important;
         }
 

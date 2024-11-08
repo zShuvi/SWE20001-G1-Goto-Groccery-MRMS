@@ -367,7 +367,7 @@ body.dark .switch::before
 /* Admin Home Container Box */
 .container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 20px;
 }
@@ -380,7 +380,10 @@ body.dark .switch::before
     text-align: center;
     box-shadow: var(--text-color);
     transition: var(--trans-05);
+    justify-content: center;
+    align-items: center;
 }
+
 
 .box img {
     width: 50%;
@@ -414,3 +417,67 @@ body.dark button:hover
 .container .text{
     font-size: 20px;
 }
+
+
+/* Infor decor in Dashboard */
+
+#infor{
+    width: 96.5%;
+    margin-left: 20px;
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Space items evenly */
+    align-items: center; /* Center items vertically */
+}
+
+
+
+.info-item {
+    display: flex; /* Use flexbox for item layout */
+    flex-direction: column; /* Stack icon and text vertically */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+}
+
+.box .icon {
+    font-size: 40px; /* Icon size */
+    color: #4CAF50; /* Icon color */
+    margin-bottom: 10px; /* Space between icon and text */
+}
+
+.info-text h3 {
+    margin: 0; /* Remove default margin */
+    font-size: 18px; /* Title size */
+    color: var(--text-color); /* Title color */
+    transition: var(--trans-05);
+}
+
+.info-text p {
+    margin: 0; /* Remove default margin */
+    font-size: 16px; /* Value size */
+    color: #ff8c00; /* Value color */
+    transition: var(--trans-05);
+}
+
+.box h2{
+    color: var(--text-color)
+}
+
+/* CHART */
+#salesChart {
+    width: 600px !important;
+    height: 500px !important;
+}
+
+
+#salesPieChart {
+    width: 500px !important;
+    height: 500px !important;
+}
+
+.chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

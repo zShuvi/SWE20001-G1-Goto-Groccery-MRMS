@@ -11,10 +11,13 @@ CREATE TABLE ReceiptTable (
 
 
 -- Insert sample data into Receipt
-INSERT INTO Receipt (ReceiptID, UserID, Date, TotalPrice)
-VALUES 
-    (1, 101, '2024-10-30', 150.00),
-    (2, 102, '2024-10-29', 250.00);
+ALTER TABLE ReceiptTable
+ADD COLUMN voucherID INT;
+
+ALTER TABLE ReceiptTable
+ADD CONSTRAINT fk_voucher
+FOREIGN KEY (voucherID)
+REFERENCES VouchersTable(voucherID)
 
 DROP TABLE ReceiptTable ;
 DELETE FROM ReceiptTable ;

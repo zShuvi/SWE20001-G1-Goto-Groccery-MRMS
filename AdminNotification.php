@@ -333,8 +333,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                                     <p style="color: orange;"><strong>Alert:</strong> Stock is below threshold!</p>
                                 </div>
                                 
-                                    <a href="AdminStockOrder.php">
-                                        <button class="ok-btn">
+                                    <a href="AdminStockOrder.php?productID=' . $lowStockow["ProductID"] . '">
+                                        <button class="ok-btn"> 
                                             <span>Order Stock</span>
                                         </button>
                                     </a>

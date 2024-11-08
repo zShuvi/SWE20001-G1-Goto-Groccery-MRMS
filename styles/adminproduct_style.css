@@ -499,12 +499,12 @@ body.dark button:hover
 }
 
 .product-card img {
+    background-color: white;
     width: 110px;
     height: 110px;
-    object-fit: cover;
+    object-fit: contain;
     margin-right: 15px;
     border-radius: 10%;
-    object-fit: cover;
     border: 2px solid var(--text-color); /* Adds a border around the image */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow for a 3D effect */
     transition: var(--trans-05);

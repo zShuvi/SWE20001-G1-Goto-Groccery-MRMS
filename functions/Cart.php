@@ -25,6 +25,8 @@ Structure:
             }
         }
     } */
+
+
 function addToCart($productID, $quantity = 1) 
 {
     // Check if the item already exists in the cart
@@ -42,11 +44,25 @@ function addToCart($productID, $quantity = 1)
     }
 }
 
+
+// If this script is called via AJAX
+if (isset($_GET['action']) && $_GET['action'] === 'add' && isset($_GET['productID'])) {
+    $productID = $_GET['productID'];
+    $success = addToCart($productID);
+
+    // Respond with JSON
+    header('Content-Type: application/json');
+    echo json_encode(['success' => $success, 'message' => $success ? 'Item add' : $productID]);
+    exit;
+}
+
+
 function removeFromCart($productID, $quantity = 1)
 {
     if (isset($_SESSION['cart'][$productID])) 
     {
         $_SESSION['cart'][$productID]['quantity'] -= $quantity;
+
         if ($_SESSION['cart'][$productID]['quantity'] < 1)
         {
             unset($_SESSION['cart'][$productID]); //fully remove item from cart
@@ -56,6 +72,18 @@ function removeFromCart($productID, $quantity = 1)
     {
         $_SESSION['error'] = "Item not found";
     }
+}
+
+
+// If this script is called via AJAX
+if (isset($_GET['action']) && $_GET['action'] === 'remove' && isset($_GET['productID'])) {
+    $productID = $_GET['productID'];
+    $success = removeFromCart($productID);
+
+    // Respond with JSON
+    header('Content-Type: application/json');
+    echo json_encode(['success' => $success, 'message' => $success ? 'Item removed' : $productID]);
+    exit;
 }
 
 function updateQuantity($productID, $quantity) 
@@ -89,3 +117,8 @@ function productsInCart() //good for having a visual element showing a tally of 
         return 0;
     }
 }
+
+
+
+?>
+
