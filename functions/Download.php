@@ -1,6 +1,7 @@
-<!-- If any future formats like .txt or other filetypes need a download function, put it in this php file. -->
-
 <?php
+
+// If any future formats like .txt or other filetypes need a download function, put it in this php file.
+
 
 /* This is a generalized download function that automatically formats arrays into CSV before creating a download.
 Formatting should be done in EACH report generating page separately.
@@ -13,9 +14,10 @@ You MUST format the data like this before calling the function:
     ]; */
 function downloadCSV($filename = "report.csv", $data = []) //Bind this to a download button
 {
+
     // Set headers to force download
     header("Content-Type: text/csv");
-    header("Content-Disposition: attachment; filename=\"$filename\"");
+    header("Content-Disposition: attachment; filename=\"$filename\".csv");
 
     // Open output stream for writing CSV data
     $output = fopen("php://output", "w");
@@ -89,3 +91,5 @@ function downloadCSV($filename = "report.csv", $data = []) //Bind this to a down
         GROUP BY t.UserID
         ORDER BY Total_Spent DESC
         LIMIT 5; */
+
+?>
