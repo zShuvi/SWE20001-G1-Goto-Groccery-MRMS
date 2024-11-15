@@ -129,9 +129,7 @@ body.dark
 .sidebar .image-text img
 {
     width: 40px;
-    height: 40px;
     border-radius: 6px;
-    object-fit: cover !important; /* Ensures the image covers the element's box */
 }
 
 .sidebar header .image-text
@@ -413,4 +411,112 @@ body.dark button:hover
     font-size: 20px;
 }
 
+/* Divider */ /* Divider */
+/* Divider */ /* Divider */
 
+/* Style for the popup overlay */
+.popup {
+    display: none;                   /* Hidden by default */
+    position: fixed;
+    z-index: 1;                      /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;                     /* Full width */
+    height: 100%;                    /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black with transparency */
+    justify-content: center;         /* Center content */
+    align-items: center;
+}
+
+/* Popup content box */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Popup Content */
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+}
+
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styling for form elements */
+form {
+    margin-top: 20px;
+}
+
+select {
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#dateInput, #monthInput, #yearInput {
+    margin-top: 10px;
+    display: none;
+}
+
+/* Stock report popup  */
+/* Stock report popup  */
+#stockReportPopup {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+#popupContent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+}
