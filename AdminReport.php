@@ -425,6 +425,7 @@ include "Database.php";
         }
     }
 ?>
+
 <!DOCTYPE html>
 <html>
 <!-- Head, Charset etc....-->
@@ -595,23 +596,13 @@ include "Database.php";
         <div class="popup-content">
             <span class="close" onclick="closeSalesPopup()">&times;</span>
             <h2>Generate Sales Report</h2>
-            <p>Select the period and type for the report:</p>
-
-            <form id="salesReportForm" name="salesReportForm" method="POST" action="">
-                <label for="salesReportOption">Choose Report Timeframe:</label><br>
-                <select id="salesReportOption" name="salesReportOption" required>
-                    <option value=""></option>
+            <p>Select the period for the report:</p>
+            <form id="salesReportForm">
+                <label for="reportOption">Choose Report Type:</label><br>
+                <select id="reportOption" name="reportOption">
                     <option value="daily">Daily</option>
                     <option value="monthly">Monthly</option>
                     <option value="yearly">Yearly</option>
-                </select><br><br>
-
-             
-                <label for="reportType">Choose Report Type:</label><br>
-                <select id="reportType" name="reportType" required>
-                    <option value=""></option>
-                    <option value="PopularItems">Popular Items</option>
-                    <option value="TotalSales">Total Sales</option>
                 </select><br><br>
                 
                 <!-- Daily Report - Date Picker -->
@@ -643,7 +634,7 @@ include "Database.php";
         <div class="popup-content">
             <span class="close" onclick="closeStockPopup()">&times;</span>
             <h2>Stock Report</h2>
-            <form id="stockReportForm" name="stockReportForm" method="POST" action="">
+            <form id="stockReportForm">
                 <label for="stockReportOption">Choose a report:</label>
                 <select id="stockReportOption">
                     <option value="top5MostRestock">View top 5 most restocked</option>
@@ -666,16 +657,13 @@ include "Database.php";
         <div class="popup-content">
             <span class="close" onclick="closeCustomerPopup()">&times;</span>
             <h2>Generate Customer Report</h2>
-            <form id="customerReportForm" name="customerReportForm" method="POST" action="">
+            <form id="customerReportForm">
                 <label for="customerReportOption">Choose Report Type:</label><br>
                 <select id="customerReportOption" name="customerReportOption">
                     <option value="favItem">Customer Favourite Item</option>
                     <option value="allMembers">Show All Members</option>
                     <option value="topSpending">Top 5 Spending Customers</option>
-                </select><br>
-                <label for="customerID">Customer ID:</label>
-                    <input type="text" id="customerID" name="customerID" placeholder="Enter customer ID">
-                <br>
+                </select><br><br>
                 <button type="submit">Generate Report</button>
                 <button type="button" onclick="closeCustomerPopup()">Close</button>
             </form>
@@ -688,7 +676,7 @@ include "Database.php";
     <script src="scripts/AdminSalesReport.js"></script>
     <!-- Script for admin stock report -->
     <script src="scripts/AdminStockReport.js"></script>
-    <!-- Script for admin customer report -->
+    <!-- Script for admin Customer report -->
     <script src="scripts/AdminCustomerReport.js"></script>
 </body>
 </html>
