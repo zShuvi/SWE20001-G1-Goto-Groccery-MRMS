@@ -71,6 +71,7 @@
                 // Insert into ReceiptTable
                 $insertReceiptSQL = "INSERT INTO ReceiptTable (UserID, Date, TotalPrice, voucherID) VALUES ($userID, '$date', $totalPrice, '" . $_SESSION["voucher_id"] . "')";
                 
+                unset($_SESSION["voucher"]);
             } else {
 
                 // Insert into ReceiptTable

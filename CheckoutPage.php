@@ -36,6 +36,7 @@
         } else {
             // No match found (invalid voucher or voucher does not belong to this user)
             $error = "Voucher not found or have been used";
+            unset($_SESSION["voucher"]);
         }
 
     }
@@ -78,10 +79,17 @@
             <a href="Home.php#features">Features</a>
             <a href="Product.php">Products</a>
             <a href="Home.php#reviews">Reviews</a>
+            <a href="OrderHistory.php">Order History</a>
         </nav>
 
     <div class="icons">
-        <div class="fa fa-bars" id="menu-btn"></div>
+        <div class="fa fa-bars" id="menu-btn">
+            <ul class="dropdown-content">
+                <li><a href="Home.php">Home</a></li>
+                <li><a href="Product.php">Products</a></li>
+                <li><a href="OrderHistory.php">Order History</a></li>
+            </ul>
+        </div>
         <div class="fa fa-shopping-cart" id="cart-btn" onclick="window.location.href='CheckoutPage.php'"></div>
         <div class="fa fa-user" id="user-btn">
             <ul id="dropdownList" class="dropdown-content">

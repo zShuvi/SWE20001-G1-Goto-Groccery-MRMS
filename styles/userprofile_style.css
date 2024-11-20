@@ -329,6 +329,10 @@ footer .footer-links {
     display: block;
   }
 
+  #menu-btn:hover .dropdown-content {
+    display: block;
+  }
+
 
   /* Styling for the ribbon effect */
 .ribbon-header {

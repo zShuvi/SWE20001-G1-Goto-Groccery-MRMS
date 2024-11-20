@@ -1,4 +1,4 @@
--- Active: 1728464706565@@127.0.0.1@3306@grocery_store
+-- Active: 1728990721892@@127.0.0.1@3306@grocery_store
 USE grocery_store;
 CREATE TABLE VoucherOwn (
     VoucherOwnID INT AUTO_INCREMENT PRIMARY KEY,

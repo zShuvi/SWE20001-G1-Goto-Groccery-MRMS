@@ -6,24 +6,13 @@ CREATE TABLE StockOrderHistory (
     ProductID INT NOT NULL,
     Quantity INT NOT NULL,
     OrderDate DATE NOT NULL,
-    FOREIGN KEY (ProductID) REFERENCES ProductTable(ProductID)
+    FOREIGN KEY (ProductID) REFERENCES ProductTable(ProductID),
+    CONSTRAINT unique_product_date UNIQUE (ProductID, OrderDate)
 );
-
 
 
 DROP TABLE StockOrderHistory;
 DELETE FROM StockOrderHistory;
-
-ALTER TABLE StockOrderHistory ADD CONSTRAINT unique_product_date UNIQUE (ProductID, OrderDate);
-
-
-
-
-INSERT INTO StockOrderHistory (ProductID, Quantity, OrderDate)VALUES (40, 10, '2024-11-08')ON DUPLICATE KEY UPDATE Quantity = Quantity + VALUES(Quantity);
-INSERT INTO StockOrderHistory (ProductID, Quantity, OrderDate)VALUES (41, 6, '2024-11-08')ON DUPLICATE KEY UPDATE Quantity = Quantity + VALUES(Quantity);
-
-INSERT INTO StockOrderHistory (ProductID, Quantity, OrderDate)VALUES (43, 13, '2024-11-08')ON DUPLICATE KEY UPDATE Quantity = Quantity + VALUES(Quantity);
-
 
 
 

@@ -12,9 +12,10 @@ function closeCustomerPopup() {
     customerPopup.style.display = "none";
 }
 
-// Handle form submission for Customer Report
+
+/* // Handle form submission for Customer Report
 document.getElementById("customerReportForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+    //event.preventDefault();
 
     var selectedOption = document.getElementById("customerReportOption").value;
 
@@ -28,3 +29,4 @@ document.getElementById("customerReportForm").addEventListener("submit", functio
 
     closeCustomerPopup(); 
 });
+ */

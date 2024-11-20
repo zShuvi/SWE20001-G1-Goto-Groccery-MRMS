@@ -357,6 +357,11 @@ footer .footer-links {
     display: block;
   }
 
+  /* Show the dropdown content when hovering over the user icon */
+  #menu-btn:hover .dropdown-content {
+    display: block;
+  }
+
 
   /* Styling for the ribbon effect */
 .ribbon-header {
@@ -429,11 +434,11 @@ footer .footer-links {
 }
 
 .search {
-    background-image: url('/images/Option1.jpg'); /* Replace with your search image path */
+    background-image: url('../images/Option1.jpg'); /* Replace with your search image path */
 }
 
 .sort {
-    background-image: url('/images/Option2.jpg'); /* Replace with your sort image path */
+    background-image: url('../images/Option2.jpg'); /* Replace with your sort image path */
 }
 
 

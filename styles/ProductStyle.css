@@ -364,3 +364,8 @@ footer .footer-links {
   #user-btn:hover .dropdown-content {
     display: block;
   }
+
+  /* Show the dropdown content when hovering over the user icon */
+  #menu-btn:hover .dropdown-content {
+    display: block;
+  }

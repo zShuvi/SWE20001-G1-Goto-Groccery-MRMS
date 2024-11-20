@@ -53,6 +53,23 @@ body {
     color: #009874;
 }
 
+.header .navbar a:after
+{
+    content: "";
+    position: absolute;
+    background-color: #14837a;
+    height: 3px;
+    width: 0%;
+    left: 0;
+    bottom: -15%;
+    transition: 0.5s;
+}
+
+.header .navbar a:hover:after
+{
+    width: 100%;
+}
+
 .header .icons div {
     border: 1px solid;
     height: 45px;
@@ -71,6 +88,7 @@ body {
     background: #4ea27a;
     color: white;
 }
+
 
 .container {
     max-width: 1200px;
@@ -345,6 +363,11 @@ footer .footer-links {
   
   /* Show the dropdown content when hovering over the user icon */
   #user-btn:hover .dropdown-content {
+    display: block;
+  }
+
+  /* Show the dropdown content when hovering over the user icon */
+  #menu-btn:hover .dropdown-content {
     display: block;
   }
 

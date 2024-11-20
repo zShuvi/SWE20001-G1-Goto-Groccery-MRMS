@@ -23,8 +23,8 @@ function closeStockPopup() {
     stockPopup.style.display = "none"; 
 }
 
-document.getElementById("stockReportForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+/* document.getElementById("stockReportForm").addEventListener("submit", function(event) {
+    //event.preventDefault();
     
     var selectedOption = stockReportOption.value;
     var reportValue;
@@ -41,4 +41,4 @@ document.getElementById("stockReportForm").addEventListener("submit", function(e
     }
     
     closeStockPopup(); 
-});
+}); */

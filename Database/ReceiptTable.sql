@@ -6,18 +6,10 @@ CREATE TABLE ReceiptTable (
     ReceiptID INT AUTO_INCREMENT PRIMARY KEY,
     UserID INT NOT NULL,
     Date DATE NOT NULL,
-    TotalPrice DECIMAL(10, 2) NOT NULL
+    TotalPrice DECIMAL(10, 2) NOT NULL,
+    voucherID INT,
+    FOREIGN KEY (voucherID) REFERENCES VouchersTable(voucherID)
 );
-
-
--- Insert sample data into Receipt
-ALTER TABLE ReceiptTable
-ADD COLUMN voucherID INT;
-
-ALTER TABLE ReceiptTable
-ADD CONSTRAINT fk_voucher
-FOREIGN KEY (voucherID)
-REFERENCES VouchersTable(voucherID)
 
 DROP TABLE ReceiptTable ;
 DELETE FROM ReceiptTable ;

@@ -228,6 +228,10 @@ footer .footer-links {
     display: block;
   }
 
+  #menu-btn:hover .dropdown-content {
+    display: block;
+  }
+
   /*Membership Style starts here */
   .main-container {
     display: flex;
