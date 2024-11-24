@@ -484,6 +484,8 @@ table {
     width: 105%;
     border-collapse: collapse;
     margin-top: 20px;
+    color: var(--text-color);
+    transition: var(--trans-05);
 }
 
 table thead {
@@ -508,6 +510,10 @@ table tbody td a {
     color: var(--primary-color);
     text-decoration: none;
     margin-right: 8px;
+}
+
+body.dark table tbody td a{
+    color: red;
 }
 
 .table-container {
