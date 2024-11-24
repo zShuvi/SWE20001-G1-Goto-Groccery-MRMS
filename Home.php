@@ -119,7 +119,7 @@
             </div>
             <div class="category">
                 <a href="ShopByCategoryPage.php?category=Dairy">
-                    <img src="images/ProductImage/Kenkori_Eggs.png" alt="Dairy & Eggs">
+                    <img src="https://via.placeholder.com/150" alt="Dairy & Eggs">
                     <h3>Dairy & Eggs</h3>
                 </a>
             </div>

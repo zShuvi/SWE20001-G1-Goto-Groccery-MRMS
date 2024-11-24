@@ -32,7 +32,7 @@ $result = $conn->query($sql);
     <meta name="author" content="G1">
     <title>Goto Grocery Admin Edit Users</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="styles/AdminEditUser_style.css" rel="stylesheet">
+    <link href="styles/EditUserStyle.css" rel="stylesheet">
 </head>
 
     <!-- Navigation Sidebar -->
@@ -207,73 +207,141 @@ $result = $conn->query($sql);
 
 
 <!-- Edit User Popup Form -->
-<div id="overlay" class="overlay" onclick="closeEditPopup()"></div>
+<!-- Edit User Popup Form -->
+<div id="overlay" class="overlay" onclick="closeEditPopup(); closeAddPopup()"></div>
 <div id="editUserPopup" class="popup-form">
     <span class="close-button" onclick="closeEditPopup()">&times;</span>
     <h2>Edit User</h2>
-    <form action="UpdateUser.php" method="POST">
+    <form id="userForm">
         <input type="hidden" id="editUserId" name="id">
+
+        <!-- Username Field -->
         <div class="form-group">
             <label for="editUsername">Username</label>
             <input type="text" id="editUsername" name="username" required>
         </div>
+
+        <!-- Role Dropdown -->
         <div class="form-group">
             <label for="editRole">Role</label>
-            <input type="text" id="editRole" name="role" required>
+            <select id="editRole" name="role" required>
+                <option value="">Select Role</option>
+                <option value="Member">Member</option>
+                <option value="Staff">Staff</option>
+                <option value="JuniorAdmin">JuniorAdmin</option>
+                <option value="SeniorAdmin">SeniorAdmin</option>
+            </select>
         </div>
+
+        <!-- Email Field -->
         <div class="form-group">
             <label for="editEmail">Email</label>
             <input type="email" id="editEmail" name="email" required>
         </div>
+
+        <!-- Password Field -->
         <div class="form-group">
             <label for="editPassword">Password</label>
-            <input type="text" id="editPassword" name="password" required>
+            <input type="password" id="editPassword" name="password" required>
         </div>
+
+        <!-- Phone Number Field -->
         <div class="form-group">
             <label for="editPhone">Phone Number</label>
             <input type="text" id="editPhone" name="phone" required>
         </div>
+
+        <!-- Date of Birth Field -->
         <div class="form-group">
-            <label for="editDateOfBirth">DateOfBirth</label>
-            <input type="text" id="editDateOfBirth" name="dateofbirth" required>
+            <label for="editDateOfBirth">Date of Birth</label>
+            <input type="date" id="editDateOfBirth" name="dateofbirth" required>
         </div>
+
+        <!-- Buttons -->
         <div class="button-group">
             <button type="button" onclick="saveUserChanges()">Save Changes</button>
         </div>
     </form>
 </div>
-<!-- Add User Popup Form -->
-<div id="editUserPopup" class="popup-form">
-    <span class="close-button" onclick="closeEditPopup()">&times;</span>
-    <h2 id="popupTitle">Edit User</h2>
-    <form action="UpdateOrAddUser.php" method="POST" id="userForm">
-        <input type="hidden" id="editUserId" name="id">
+
+
+
+<!-- Add User Popup -->
+<div id="addUserPopup" class="popup-form">
+    <span class="close-button" onclick="closeAddPopup()">&times;</span>
+    <!-- Title placed above the form -->
+    <h2 id="popupTitle">Add User</h2>
+
+    <form action="AddUser.php" method="POST" id="userForm">
+        <!-- Hidden Field for User ID -->
+        <input type="hidden" id="addUserId" name="id">
+
+        <!-- Username Field -->
         <div class="form-group">
-            <label for="editUsername">Username</label>
-            <input type="text" id="editUsername" name="username" required>
+            <label for="addUsername">Username:</label>
+            <input type="text" id="addUsername" name="add_username" required>
         </div>
+
+        <!-- Role Dropdown -->
         <div class="form-group">
-            <label for="editRole">Role</label>
-            <input type="text" id="editRole" name="role" required>
+            <label for="addRole">Role:</label>
+            <select id="addRole" name="add_role" required>
+                <option value="">Select Role</option>
+                <option value="Member">Member</option>
+                <option value="Staff">Staff</option>
+                <option value="JuniorAdmin">JuniorAdmin</option>
+                <option value="SeniorAdmin">SeniorAdmin</option>
+            </select>
         </div>
+
+        <!-- Email Field -->
         <div class="form-group">
-            <label for="editEmail">Email</label>
-            <input type="email" id="editEmail" name="email" required>
+            <label for="addEmail">Email:</label>
+            <input type="email" id="addEmail" name="add_email" required>
         </div>
+
+        <!-- Password Field -->
         <div class="form-group">
-            <label for="editPassword">Password</label>
-            <input type="text" id="editPassword" name="password" required>
+            <label for="addPassword">Password:</label>
+            <input type="password" id="addPassword" name="add_password" pattern="^.{8,}$" 
+            title="Must contain at least 8 or more characters" required>
         </div>
+
+        <!-- Phone Number Field -->
         <div class="form-group">
-            <label for="editPhone">Phone Number</label>
-            <input type="text" id="editPhone" name="phone" required>
+            <label for="addPhone">Phone Number:</label>
+            <input type="text" id="addPhone" name="add_phone" required>
         </div>
+
+        <!-- Date of Birth Field -->
         <div class="form-group">
-            <label for="editDateOfBirth">DateOfBirth</label>
-            <input type="text" id="editDateOfBirth" name="dateofbirth" required>
+            <label for="addDateOfBirth">Date of Birth:</label>
+            <input type="date" id="addDateOfBirth" name="add_dateofbirth" required>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button type="submit">Save Changes</button>
+            <button type="button" class="cancel-btn" onclick="closeAddPopup()">Cancel</button>
         </div>
     </form>
 </div>
+
+<!-- Dark background overlay (covers the rest of the screen) -->
+<div id="overlay" class="overlay" onclick="closeEditPopup()"></div>
+
+<!-- Confirmation Popup for Deleting a User -->
+<div id="deletePopup" class="popup-overlay" style="display: none;">
+    <div class="popup-content">
+        <h3>Are you sure you want to delete this user?</h3>
+        <div class="button-group">
+            <button id="confirmDeleteBtn" class="confirm-btn">Yes</button>
+            <button id="cancelDeleteBtn" class="cancel-btn" onclick="closeDeletePopup()">No</button>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Confirmation Popup for Deleting a User -->
 <div id="deletePopup" class="popup-overlay" style="display: none;">

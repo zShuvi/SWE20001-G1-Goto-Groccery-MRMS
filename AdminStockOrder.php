@@ -126,7 +126,14 @@ if (isset($_GET['search'])) {
     $search = $conn->real_escape_string($_GET['search']);
     
     // SQL query to search products
-    $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' OR Category LIKE '%$search%' OR ProductID LIKE '%$search%' ORDER BY Name ASC";
+    if ($search === "lowstock") {
+        // Fetch all low stock products
+        $sql = "SELECT * FROM ProductTable WHERE Quantity <= 10 ORDER BY Name ASC";
+    } else {
+        // Perform a regular search
+        $sql = "SELECT * FROM ProductTable WHERE Name LIKE '%$search%' OR Category LIKE '%$search%' OR ProductID LIKE '%$search%' ORDER BY Name ASC";
+    }
+    
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
@@ -167,6 +174,8 @@ if (isset($_GET['search'])) {
     exit;
 }
     
+
+
 
     
 ?>

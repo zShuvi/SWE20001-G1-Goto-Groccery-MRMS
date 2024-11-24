@@ -217,6 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	<meta name="author" content="G1" >
 	<title> Goto Grocery Admin Home Page </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">  
 	<link href="styles/userprofile_style.css" rel="stylesheet">
 </head>
@@ -341,7 +342,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" name="username" value="<?php echo $username; ?>">
+                                        <input type="text" class="form-control mb-1" name="username" value="<?php echo $username; ?>" required>
                                     </div>
 
                                     <div class="form-group">
@@ -357,7 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                                     <div class="form-group">
                                         <label class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control mb-1" name="date_of_birth" value=<?php echo $date_of_birth ?>>
+                                        <input type="date" class="form-control mb-1" id="date_input" name="date_of_birth" value=<?php echo $date_of_birth ?> required>
                                     </div>
                                 </div>
 
@@ -394,15 +395,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 <input type="hidden" name="form_type" value="password_update">
                                     <div class="form-group">
                                         <label class="form-label">Current password</label>
-                                        <input type="password" name="currentpassword" class="form-control">
+                                        <input type="password" name="currentpassword" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">New password</label>
-                                        <input type="password" name="newpassword" class="form-control">
+                                        <input type="password" id="psw" name="newpassword" pattern="^.{8,}$" 
+                                        title="Must contain at least 8 or more characters" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Repeat new password</label>
-                                        <input type="password" name="newpasswordConfirm" class="form-control">
+                                        <input type="password" name="newpasswordConfirm" class="form-control" required>
+                                    </div>
+
+                                    <div id="message">
+                                    <h3>Password must contain the following:</h3>
+                                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
                                     </div>
                                 
                                 </div>
@@ -469,6 +476,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript"></script>
     <script src="scripts/dropdown.js"></script>
+    <script src="scripts/password_date_check.js"></script>
 </body>
 
 

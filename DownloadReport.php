@@ -49,21 +49,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $dailyData['Sales_Quantity'] = 0;
             }
 
-            // Popular Items (Top 5 Products Sold)
-            $sql = "SELECT p.Name, COUNT(ri.ProductID) AS Total_Sold
+            // Popular Items (Top 1, Top 2, Top 3 Products Sold)
+            $sql = "SELECT p.Name, SUM(ri.Quantity) AS Total_Sold
                     FROM ReceiptItemTable AS ri
                     JOIN ProductTable AS p ON ri.ProductID = p.ProductID
                     JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID
                     WHERE r.Date = '$reportDate'
                     GROUP BY p.Name
                     ORDER BY Total_Sold DESC
-                    LIMIT 5";
+                    LIMIT 3";
             $result = $conn->query($sql);
+
             $popularItems = [];
             if ($result->num_rows > 0) {
+                $rank = 1;
                 while ($row = $result->fetch_assoc()) {
-                    $popularItems[] = $row['Name'];
+                    $popularItems[] = "Top $rank: {$row['Name']} (Quantity Sold: {$row['Total_Sold']})";
+                    $rank++;
                 }
+            } else {
+                $popularItems = ["No items sold on this day."];
             }
 
             // Prepare formatted data for CSV (columns)
@@ -72,8 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $formattedData[] = ['Total Earnings', $dailyData['Total_Earnings']];
             // Sales Quantity
             $formattedData[] = ['Sales Quantity', $dailyData['Sales_Quantity']];
-            // Popular Items - name only in the Popular Item column
-            $formattedData[] = ['Popular Item', implode(', ', $popularItems)];
+            // Popular Items
+            foreach ($popularItems as $item) {
+                $formattedData[] = ['Popular Item', $item];
+            }
 
             // File name and CSV download
             $fileName = "Daily Report - $reportDate";
@@ -86,13 +93,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else if ($timeframe === 'monthly') {
             $reportMonth = $_POST['monthlyMonth'];
             list($year, $month) = explode('-', $reportMonth);
-
-            // Prepare the data for the Monthly Report: Total Earnings, Popular Item, and Daily Sales Revenue
+        
+            // Prepare the data for the Monthly Report: Total Earnings, Top 5 Items
             if ($formtype === 'TotalSales') {
                 // Total Earnings for the Month
                 $sql = "SELECT SUM(TotalPrice) AS Total_Earnings 
                         FROM ReceiptTable 
                         WHERE YEAR(Date) = '$year' AND MONTH(Date) = '$month'";
+                $result = $conn->query($sql);
+        
+                $totalEarnings = 0;
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $totalEarnings = $row['Total_Earnings'];
+                }
+        
+                // Get the top 5 popular items by quantity sold for the month
+                $sqlPopular = "SELECT p.Name, SUM(ri.Quantity) AS Total_Sold 
+                               FROM ReceiptItemTable AS ri
+                               JOIN ProductTable AS p ON ri.ProductID = p.ProductID
+                               JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID
+                               WHERE YEAR(r.Date) = '$year' AND MONTH(r.Date) = '$month'
+                               GROUP BY p.Name
+                               ORDER BY Total_Sold DESC
+                               LIMIT 5";  // Top 5 items
+                $resultPopular = $conn->query($sqlPopular);
+        
+                $popularItems = [];
+                $rank = 1;
+                while ($row = $resultPopular->fetch_assoc()) {
+                    $popularItems[] = "Top $rank: {$row['Name']} (Quantity Sold: {$row['Total_Sold']})";
+                    $rank++;
+                }
+        
+                // Ensure that if there are fewer than 5 items, we still show the available ones
+                while ($rank <= 5) {
+                    $popularItems[] = "Top $rank: No sales recorded.";
+                    $rank++;
+                }
+        
+                // Prepare the formatted data for CSV
+                $formattedData = [
+                    ['Total Earnings', $totalEarnings],
+                ];
+        
+                // Add the Top 5 Items to the formatted data
+                foreach ($popularItems as $item) {
+                    $formattedData[] = ['Popular Item', $item];
+                }
+        
+                // Add the daily sales revenue (without "Daily Revenue" column label)
+                $sqlDailySales = "SELECT DATE(Date) AS Sales_Date, SUM(TotalPrice) AS Daily_Revenue
+                                  FROM ReceiptTable 
+                                  WHERE YEAR(Date) = '$year' AND MONTH(Date) = '$month'
+                                  GROUP BY DATE(Date)";
+                $resultDaily = $conn->query($sqlDailySales);
+                if ($resultDaily->num_rows > 0) {
+                    while ($row = $resultDaily->fetch_assoc()) {
+                        $formattedData[] = ['Date', $row['Sales_Date'], $row['Daily_Revenue']];
+                    }
+                }
+        
+                // Add the file name and initiate CSV download
+                $fileName = "$reportMonth Monthly Report.csv";
+                ob_end_clean();  // Clean (erase) the output buffer and turn off output buffering
+                downloadCSV($fileName, $formattedData);
+                exit;
+            }
+        }
+
+        // Yearly Report Generation
+        else if ($timeframe === 'yearly') {
+            $reportYear = $_POST['yearlyYear'];
+
+            // Prepare the data for the Yearly Report: Total Earnings, Top 10 Items, and Products Performance
+            if ($formtype === 'TotalSales') {
+                // Total Earnings for the Year (Yearly Sales Revenue)
+                $sql = "SELECT SUM(TotalPrice) AS Total_Earnings 
+                        FROM ReceiptTable 
+                        WHERE YEAR(Date) = '$reportYear'";
                 $result = $conn->query($sql);
 
                 $totalEarnings = 0;
@@ -101,127 +180,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $totalEarnings = $row['Total_Earnings'];
                 }
 
-                // Get the most popular item for the month
-                $sqlPopular = "SELECT p.Name, COUNT(ri.ProductID) AS Total_Sold 
-                               FROM ReceiptItemTable AS ri
-                               JOIN ProductTable AS p ON ri.ProductID = p.ProductID
-                               JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID
-                               WHERE YEAR(r.Date) = '$year' AND MONTH(r.Date) = '$month'
-                               GROUP BY p.Name
-                               ORDER BY Total_Sold DESC
-                               LIMIT 1";
+                // Get the top 10 popular items by quantity sold for the year
+                $sqlPopular = "SELECT p.Name, SUM(ri.Quantity) AS Total_Sold 
+                            FROM ReceiptItemTable AS ri
+                            JOIN ProductTable AS p ON ri.ProductID = p.ProductID
+                            JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID
+                            WHERE YEAR(r.Date) = '$reportYear'
+                            GROUP BY p.Name
+                            ORDER BY Total_Sold DESC
+                            LIMIT 10";  // Top 10 items
                 $resultPopular = $conn->query($sqlPopular);
-                $popularItem = "";
-                if ($resultPopular->num_rows > 0) {
-                    $row = $resultPopular->fetch_assoc();
-                    $popularItem = $row['Name'];
+
+                $popularItems = [];
+                $rank = 1;
+                while ($row = $resultPopular->fetch_assoc()) {
+                    $popularItems[] = "Top $rank: {$row['Name']} (Quantity Sold: {$row['Total_Sold']})";
+                    $rank++;
                 }
 
-                // Get daily sales revenue for the month
-                $dailySales = [];
-                $sqlDailySales = "SELECT DATE(Date) AS Sales_Date, SUM(TotalPrice) AS Daily_Revenue
-                                  FROM ReceiptTable 
-                                  WHERE YEAR(Date) = '$year' AND MONTH(Date) = '$month'
-                                  GROUP BY DATE(Date)";
-                $resultDaily = $conn->query($sqlDailySales);
-                if ($resultDaily->num_rows > 0) {
-                    while ($row = $resultDaily->fetch_assoc()) {
-                        $dailySales[] = [$row['Sales_Date'], $row['Daily_Revenue']];
-                    }
+                // Ensure that if there are fewer than 10 items, we still show the available ones
+                while ($rank <= 10) {
+                    $popularItems[] = "Top $rank: No sales recorded.";
+                    $rank++;
+                }
+
+                // Get the product performance (all products: sold and not sold)
+                $sqlProductsPerformance = "SELECT p.Name, 
+                                                IFNULL(SUM(ri.Quantity), 0) AS Total_Sold, 
+                                                p.Quantity - IFNULL(SUM(ri.Quantity), 0) AS Remaining_Quantity
+                                            FROM ProductTable AS p
+                                            LEFT JOIN ReceiptItemTable AS ri ON p.ProductID = ri.ProductID
+                                            LEFT JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID AND YEAR(r.Date) = '$reportYear'
+                                            GROUP BY p.Name, p.Quantity
+                                            ORDER BY Total_Sold DESC";
+                $resultProductsPerformance = $conn->query($sqlProductsPerformance);
+
+                $productsPerformance = [];
+                while ($row = $resultProductsPerformance->fetch_assoc()) {
+                    $productsPerformance[] = "{$row['Name']} (Sold: {$row['Total_Sold']}, Remaining: {$row['Remaining_Quantity']})";
                 }
 
                 // Prepare the formatted data for CSV
                 $formattedData = [
-                    ['Total Earnings', $totalEarnings],
-                    ['Popular Item', $popularItem]
+                    ['Yearly Sales Revenue', $totalEarnings],
                 ];
 
-                // Add daily sales revenue breakdown to the formatted data
-                foreach ($dailySales as $sale) {
-                    $formattedData[] = ['Date', $sale[0], 'Daily Revenue', $sale[1]];
+                // Add a "TOP 10 Items" header to the formatted data
+                $formattedData[] = [' '];
+                $formattedData[] = ['Top 10 Items'];
+                $formattedData[] = [' '];
+
+                // Add the Top 10 Items to the formatted data
+                foreach ($popularItems as $item) {
+                    $formattedData[] = ['Popular Item', $item];
                 }
 
-                // Add the file name and initiate CSV download
-                $fileName = "$reportMonth Monthly Report";
-                ob_end_clean();
-                downloadCSV($fileName, $formattedData);
-                exit;
-            }
-        }
+                // Add a "Product Performance" header to the formatted data
+                $formattedData[] = [' ']; 
+                $formattedData[] = ['Product Performance'];
+                $formattedData[] = [' '];
 
-        // Yearly Sales Report
-        if ($timeframe === 'yearly') {
-            if (isset($_POST['yearlyYear'])) {
-                $year = $_POST['yearlyYear'];
-
-                // Query to get total sales for the year
-                $sql = "SELECT SUM(TotalPrice) AS Total_Earnings FROM ReceiptTable WHERE YEAR(Date) = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("s", $year);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $totalEarnings = 0;
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $totalEarnings = $row['Total_Earnings'] ?? 0;
+                // Add all Products Performance to the formatted data
+                foreach ($productsPerformance as $product) {
+                    $formattedData[] = ['Products Performance', $product];
                 }
 
-                // Query to find the most popular item of the year
-                $sqlPopular = "
-                    SELECT p.Name, SUM(ri.Quantity) AS Total_Sold
-                    FROM ReceiptItemTable AS ri
-                    JOIN ProductTable AS p ON ri.ProductID = p.ProductID
-                    JOIN ReceiptTable AS r ON ri.ReceiptID = r.ReceiptID
-                    WHERE YEAR(r.Date) = ?
-                    GROUP BY p.Name
-                    ORDER BY Total_Sold DESC
-                    LIMIT 1";
-                $stmtPopular = $conn->prepare($sqlPopular);
-                $stmtPopular->bind_param("s", $year);
-                $stmtPopular->execute();
-                $resultPopular = $stmtPopular->get_result();
-                $popularItem = "None";
-                if ($resultPopular->num_rows > 0) {
-                    $row = $resultPopular->fetch_assoc();
-                    $popularItem = $row['Name'] ?? "None";
-                }
+                // Add a "Monthly Revenue" header to the formatted data
+                $formattedData[] = [' '];
+                $formattedData[] = ['Monthly Revenue'];
+                $formattedData[] = [' '];
 
-                // Get monthly sales revenue breakdown for the year
-                $monthlySales = [];
-                $sqlMonthlySales = "SELECT MONTH(Date) AS Month, SUM(TotalPrice) AS Monthly_Revenue
-                                    FROM ReceiptTable 
-                                    WHERE YEAR(Date) = '$year'
-                                    GROUP BY MONTH(Date)
-                                    ORDER BY MONTH(Date)";
-                $resultMonthly = $conn->query($sqlMonthlySales);
-                if ($resultMonthly->num_rows > 0) {
-                    while ($row = $resultMonthly->fetch_assoc()) {
-                        $monthlySales[] = [$row['Month'], $row['Monthly_Revenue']];
+                // Add the daily sales revenue with the "Monthly Revenue" label
+                $sqlDailySales = "SELECT DATE(Date) AS Sales_Date, SUM(TotalPrice) AS Daily_Revenue
+                                FROM ReceiptTable 
+                                WHERE YEAR(Date) = '$reportYear'
+                                GROUP BY DATE(Date)";
+                $resultDaily = $conn->query($sqlDailySales);
+                if ($resultDaily->num_rows > 0) {
+                    while ($row = $resultDaily->fetch_assoc()) {
+                        $formattedData[] = [$row['Sales_Date'], $row['Daily_Revenue']];
                     }
                 }
-
-                // Prepare CSV data
-                $formattedData = [
-                    ['Year', $year],
-                    ['Total Earnings', $totalEarnings],
-                    ['Most Popular Item', $popularItem]
-                ];
-
-                // Add monthly sales revenue breakdown to the formatted data
-                foreach ($monthlySales as $sale) {
-                    // Add the month name (numeric month converted to text)
-                    $monthName = DateTime::createFromFormat('!m', $sale[0])->format('F'); // Convert month number to name
-                    $formattedData[] = ['Month', $monthName, 'Monthly Revenue', $sale[1]];
-                }
-
-                // File name and download
-                $fileName = "{$year} Yearly Report.csv";
-                ob_end_clean();
+                // Add the file name and initiate CSV download
+                $fileName = "$reportYear Yearly Report.csv";
+                ob_end_clean();  // Clean (erase) the output buffer and turn off output buffering
                 downloadCSV($fileName, $formattedData);
-                exit;
-            } else {
-                // Handle missing year
-                echo "Year not selected.";
                 exit;
             }
         }
@@ -423,14 +466,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-
-
-
-
-
-
-
 ?>
 
 

@@ -92,12 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-box">
                 <label>Password</label>
-                <input type="password" id="password" placeholder="Create a password" name="password" required />
+                <input type="password" id="password" placeholder="Create a password" name="password" pattern="^.{8,}$" 
+                title="Must contain at least 8 or more characters" required />
             </div>
 
             <div class="input-box">
                 <label>Confirm Password</label>
-                <input type="password" id="confirm-password" placeholder="Confirm your password" required />
+                <input type="password" id="confirm-password" placeholder="Confirm your password" pattern="^.{8,}$" 
+                title="Must contain at least 8 or more characters" required />
                 <p id="error-message">Passwords do not match!</p>
             </div>
 
@@ -107,6 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="scripts/signup.js"></script>
-
+    <script src="scripts/password_date_check.js"></script>
 </body>
 </html>

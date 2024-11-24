@@ -129,7 +129,9 @@ body.dark
 .sidebar .image-text img
 {
     width: 40px;
+    height: 40px;
     border-radius: 6px;
+    object-fit: cover !important; /* Ensures the image covers the element's box */
 }
 
 .sidebar header .image-text

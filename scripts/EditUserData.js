@@ -46,3 +46,15 @@ function saveUserChanges() {
         alert("An error occurred. Please try again.");
     });
 }
+
+
+// FOR DATE CHECKING
+const currentDate = new Date();
+const targetDate = new Date();
+targetDate.setFullYear(currentDate.getFullYear() - 3);
+
+// Format the date to YYYY-MM-DD
+const formattedDate = targetDate.toISOString().split('T')[0];
+
+document.getElementById("addDateOfBirth").max = formattedDate;
+

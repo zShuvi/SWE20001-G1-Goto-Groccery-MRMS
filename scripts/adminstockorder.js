@@ -23,14 +23,14 @@ function getQueryParameter(name) {
 }
 
 // Get the product ID from the URL
-const productId = getQueryParameter("productID");
-console.log(productId);
+const lowstock = getQueryParameter("showLowStock");
+console.log(lowstock);
 
-if (productId) {
+if (lowstock) {
     // Select the search bar and set its value to the product ID
     const searchBar = document.getElementById("search");
     if (searchBar) {
-        searchBar.value = productId;
+        searchBar.value = "lowstock";
         searchBar.dispatchEvent(new Event("input"));
     }
 }

@@ -445,7 +445,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" name="username" value="<?php echo $username; ?>">
+                                        <input type="text" class="form-control mb-1" name="username" value="<?php echo $username; ?>" required>
                                     </div>
 
                                     <div class="form-group">
@@ -461,7 +461,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                                     <div class="form-group">
                                         <label class="form-label">Date of Birth</label>
-                                        <input type="date" class="form-control mb-1" id="date_input" name="date_of_birth" value=<?php echo $date_of_birth ?>>
+                                        <input type="date" class="form-control mb-1" id="date_input" name="date_of_birth" value=<?php echo $date_of_birth ?> required>
                                     </div>
                                 </div>
 
