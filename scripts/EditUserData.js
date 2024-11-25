@@ -8,6 +8,7 @@ function saveUserChanges() {
     const password = document.getElementById("editPassword").value;
     const phone = document.getElementById("editPhone").value;
     const dateofbirth = document.getElementById('editDateOfBirth').value;
+    const gender = document.getElementById("editGender").value;
     // Create the form data to send in the AJAX request
     const formData = {
         id: id,                  // Used to differentiate between add and update
@@ -16,7 +17,8 @@ function saveUserChanges() {
         email: email,            
         password: password,      
         phone: phone, 
-        dateofbirth: dateofbirth    
+        dateofbirth: dateofbirth,
+        gender: gender
     };
 
     // Determine if it's an Add or Update based on the presence of the id

@@ -1,5 +1,5 @@
 // Edit User popup form
-function openEditPopup(id, username, role, email, password, phone, dateofbirth) {
+function openEditPopup(id, username, role, email, password, phone, dateofbirth, gender) {
     document.getElementById("editUserPopup").style.display = "block";
     document.getElementById("overlay").style.display = "block";
     document.getElementById("editUserId").value = id;
@@ -9,6 +9,7 @@ function openEditPopup(id, username, role, email, password, phone, dateofbirth) 
     document.getElementById("editPassword").value = password;
     document.getElementById("editPhone").value = phone;
     document.getElementById("editDateOfBirth").value = dateofbirth;
+    document.getElementById("editGender").value = gender;
 }
 
 function closeEditPopup() {

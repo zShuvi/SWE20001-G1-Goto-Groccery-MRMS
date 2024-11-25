@@ -173,6 +173,7 @@ $result = $conn->query($sql);
                     <th>Password</th>
                     <th>Phone Number</th>
                     <th>DateOfBirth</th>
+                    <th>Gender</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -188,8 +189,9 @@ $result = $conn->query($sql);
                             <td>{$row['Password']}</td>
                             <td>{$row['PhoneNumber']}</td>
                             <td>{$row['DateOfBirth']}</td>
+                            <td>{$row['Gender']}</td>
                             <td>
-                                <a href='javascript:void(0);' onclick=\"openEditPopup({$row['ID']}, '{$row['Username']}', '{$row['Role']}', '{$row['Email']}', '{$row['Password']}', '{$row['PhoneNumber']}', '{$row['DateOfBirth']}')\">Edit</a> |
+                                <a href='javascript:void(0);' onclick=\"openEditPopup({$row['ID']}, '{$row['Username']}', '{$row['Role']}', '{$row['Email']}', '{$row['Password']}', '{$row['PhoneNumber']}', '{$row['DateOfBirth']}', '{$row['Gender']}')\">Edit</a> |
                                 <a href='javascript:void(0);' onclick='showDeletePopup({$row['ID']})'>Delete</a>
                             </td>
                         </tr>";
@@ -257,6 +259,16 @@ $result = $conn->query($sql);
             <input type="date" id="editDateOfBirth" name="dateofbirth" required>
         </div>
 
+        <!-- Gender Field -->
+        <div class="form-group">
+            <label for="editGender">Gender:</label>
+            <select id="editGender" name="edit_gender" required>
+                <option value="">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </div>
+
         <!-- Buttons -->
         <div class="button-group">
             <button type="button" onclick="saveUserChanges()">Save Changes</button>
@@ -317,6 +329,16 @@ $result = $conn->query($sql);
         <div class="form-group">
             <label for="addDateOfBirth">Date of Birth:</label>
             <input type="date" id="addDateOfBirth" name="add_dateofbirth" required>
+        </div>
+
+        <!-- Gender Field -->
+        <div class="form-group">
+            <label for="addDGender">Gender:</label>
+            <select id="addGender" name="add_gender" required>
+                <option value="">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
         </div>
 
         <!-- Buttons -->

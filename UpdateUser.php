@@ -5,7 +5,7 @@ include 'Database.php';
 $data = json_decode(file_get_contents("php://input"), true);
 $validRoles = ["Member", "Staff", "JuniorAdmin", "SeniorAdmin"];
 
-if (isset($data['id'], $data['username'], $data['role'], $data['email'], $data['password'], $data['phone'], $data['dateofbirth'])) {
+if (isset($data['id'], $data['username'], $data['role'], $data['email'], $data['password'], $data['phone'], $data['dateofbirth'], $data['gender'])) {
     $role = $data['role'];
     $password = trim($data['password']); // Trim whitespace from password
     $dateofbirth = $data['dateofbirth'];
@@ -53,9 +53,10 @@ if (isset($data['id'], $data['username'], $data['role'], $data['email'], $data['
     $password = $conn->real_escape_string($data['password']);
     $phone = $conn->real_escape_string($data['phone']);
     $dateofbirth = $conn->real_escape_string($data['dateofbirth']);
+    $gender = $conn->real_escape_string($data['gender']);
 
     // Ensure SQL query is correct for updating the user data
-    $sql = "UPDATE UsersTable SET Username='$username', Role='$role', Email='$email', Password='$password', PhoneNumber='$phone', DateOfBirth='$dateofbirth' WHERE ID='$id'";
+    $sql = "UPDATE UsersTable SET Username='$username', Role='$role', Email='$email', Password='$password', PhoneNumber='$phone', DateOfBirth='$dateofbirth', Gender='$gender' WHERE ID='$id'";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(['success' => true]);

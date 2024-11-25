@@ -3,9 +3,10 @@ session_start();
 include 'Database.php';
 
 $validRoles = ["Member", "Staff", "JuniorAdmin", "SeniorAdmin"];
+$validGender = ['M', 'F'];
 
 // Check if required POST data is available
-if (isset($_POST['add_username'], $_POST['add_role'], $_POST['add_email'], $_POST['add_password'], $_POST['add_phone'], $_POST['add_dateofbirth'])) {
+if (isset($_POST['add_username'], $_POST['add_role'], $_POST['add_email'], $_POST['add_password'], $_POST['add_phone'], $_POST['add_dateofbirth'], $_POST['add_gender'])) {
     $role = $_POST['add_role'];
     $password = trim($_POST['add_password']); // Trim whitespace from password
     $dateofbirth = $_POST['add_dateofbirth'];
@@ -41,9 +42,10 @@ if (isset($_POST['add_username'], $_POST['add_role'], $_POST['add_email'], $_POS
     $password = $conn->real_escape_string($_POST['add_password']);
     $phone = $conn->real_escape_string($_POST['add_phone']);
     $dateofbirth = $conn->real_escape_string($_POST['add_dateofbirth']);
+    $gender = $conn->real_escape_string($_POST['add_gender']);
 
-    $sql = "INSERT INTO UsersTable (Username, Role, Email, Password, PhoneNumber, DateOfBirth) 
-            VALUES ('$username', '$role', '$email', '$password', '$phone', '$dateofbirth')";
+    $sql = "INSERT INTO UsersTable (Username, Role, Email, Password, PhoneNumber, DateOfBirth, Gender, Points) 
+            VALUES ('$username', '$role', '$email', '$password', '$phone', '$dateofbirth', '$gender', 1000)";
 
     if ($conn->query($sql) === TRUE) {
         // Redirect to AdminEditUser.php after successful insert
